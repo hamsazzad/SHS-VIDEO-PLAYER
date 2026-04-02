@@ -60,7 +60,7 @@ class VlcChapterController(private val player: VlcMediaPlayer) {
      * currently active title (correct for 99 % of single-title files).
      */
     fun getChapters(): List<Chapter> {
-        val raw = player.getChapterDescription(-1) ?: return emptyList()
+        val raw = player.getChapters(-1) ?: return emptyList()
         return raw.mapIndexed { i, ch ->
             Chapter(
                 index    = i,

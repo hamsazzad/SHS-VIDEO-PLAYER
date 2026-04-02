@@ -578,15 +578,12 @@ fun MediaPlayerScreen(
                     ?.substringBeforeLast('.') ?: "",
             cacheDir = context.externalCacheDir ?: context.cacheDir,
             onSubtitleDownloaded = { file ->
-                runCatching {
-                    val player3 = (context as? dev.anilbeesetti.nextplayer.feature.player.PlayerActivity)
-                        ?.controllerFuture?.value
-                    player3?.addMediaItem(
-                        androidx.media3.common.MediaItem.fromUri(
-                            android.net.Uri.fromFile(file)
-                        )
-                    )
-                }
+                android.widget.Toast.makeText(
+                    context,
+                    "Subtitle downloaded: ${file.name}",
+                    android.widget.Toast.LENGTH_LONG,
+                ).show()
+                showSubtitleSearch = false
             },
             onDismiss = { showSubtitleSearch = false },
         )
