@@ -57,6 +57,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.AsyncImage
 import dev.anilbeesetti.nextplayer.ui.ThemeSettingsScreen
+import dev.anilbeesetti.nextplayer.ui.OptimizerScreen
 import dev.anilbeesetti.nextplayer.ui.theme.ThemeManager
 import androidx.compose.ui.graphics.Color as ComposeColor
 import androidx.compose.foundation.background
@@ -235,6 +236,7 @@ class MainActivity : ComponentActivity() {
                                             MeDestination.AboutUs -> MeSubScreen.AboutUs
                                             MeDestination.Settings -> MeSubScreen.Settings
                                             MeDestination.ThemeSettings -> MeSubScreen.ThemeSettings
+                                            MeDestination.Optimizer -> MeSubScreen.Optimizer
                                         }
                                     },
                                 )
@@ -252,6 +254,13 @@ class MainActivity : ComponentActivity() {
                                 MeSubScreen.ThemeSettings -> {
                                     BackHandler { meSubScreen = MeSubScreen.Main }
                                     ThemeSettingsScreen(
+                                        modifier = Modifier.padding(paddingValues),
+                                        onBack = { meSubScreen = MeSubScreen.Main },
+                                    )
+                                }
+                                MeSubScreen.Optimizer -> {
+                                    BackHandler { meSubScreen = MeSubScreen.Main }
+                                    OptimizerScreen(
                                         modifier = Modifier.padding(paddingValues),
                                         onBack = { meSubScreen = MeSubScreen.Main },
                                     )
@@ -317,4 +326,5 @@ sealed class MeSubScreen {
     object AboutUs : MeSubScreen()
     object Settings : MeSubScreen()
     object ThemeSettings : MeSubScreen()
+    object Optimizer : MeSubScreen()
 }

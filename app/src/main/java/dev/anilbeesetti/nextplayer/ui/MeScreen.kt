@@ -17,6 +17,7 @@ sealed class MeDestination {
     object AboutUs : MeDestination()
     object Settings : MeDestination()
     object ThemeSettings : MeDestination()
+    object Optimizer : MeDestination()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,6 +33,14 @@ fun MeScreen(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
+            item {
+                MeMenuCard(
+                    icon = NextIcons.DeleteSweep,
+                    title = "App Optimizer",
+                    subtitle = "Scan and clean app cache to free up storage",
+                    onClick = { onNavigate(MeDestination.Optimizer) },
+                )
+            }
             item {
                 MeMenuCard(
                     icon = NextIcons.Lock,

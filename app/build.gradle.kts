@@ -146,6 +146,9 @@ dependencies {
     // Image loading (background image, theme preview)
     implementation(libs.coil.kt.compose)
 
+    // Material Icons Extended (used in OptimizerScreen)
+    implementation(libs.androidx.compose.material.iconsExtended)
+
     testImplementation(libs.junit4)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.test.ext)
