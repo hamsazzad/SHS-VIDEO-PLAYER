@@ -69,6 +69,9 @@ dependencies {
     implementation(libs.github.anilbeesetti.nextlib.media3ext)
     implementation(libs.github.anilbeesetti.nextlib.mediainfo)
 
+    // LibVLC engine — needed for VlcAudioController, VlcSubtitleController, etc.
+    implementation("org.videolan.android:libvlc-all:3.5.1")
+
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.guava)
 

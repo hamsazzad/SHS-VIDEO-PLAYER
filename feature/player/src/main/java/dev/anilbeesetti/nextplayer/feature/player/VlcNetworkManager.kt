@@ -89,8 +89,8 @@ class VlcNetworkManager {
             StreamProtocol.HTTP_GENERIC -> applyHttpOptions(media)
         }
 
-        // Always parse the media metadata so VLC knows duration/tracks
-        media.parse(Media.Parse.ParseNetwork.toInt())
+        // Parse with network flag (IMedia.Parse.ParseNetwork = 0x02)
+        media.parse(0x02)
 
         return media
     }
