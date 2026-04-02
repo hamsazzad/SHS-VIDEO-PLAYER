@@ -3,6 +3,7 @@ package dev.anilbeesetti.nextplayer.feature.player
 import android.annotation.SuppressLint
 import android.app.PictureInPictureParams
 import android.content.ComponentName
+import android.content.res.Configuration
 import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
@@ -138,6 +139,17 @@ class PlayerActivity : ComponentActivity() {
     lateinit var vlcNetworkManager: VlcNetworkManager
         private set
 
+    /** Chapter list retrieval and chapter-indexed seeking (fixes non-seekable files). */
+    lateinit var vlcChapterController: VlcChapterController
+        private set
+
+    /** Aspect ratio and crop-mode control (Fit / Fill / 16:9 / 4:3 / Stretch). */
+    lateinit var vlcAspectController: VlcAspectController
+        private set
+
+    /** True while HW decoding is active; flipped to false on decode error. */
+    private var hwDecodingActive = true
+
 
     /**
      * Mirrors Media3 play/pause/seek events to the LibVLC engine.
@@ -174,9 +186,56 @@ class PlayerActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Initialize LibVLC engine with MediaCodec hardware acceleration
+        // ── LibVLC engine — full hardware decoding + 4K/HDR/HEVC optimisation ─────
         libVLC = LibVLC(this, ArrayList<String>().apply {
-            add("--codec=mediacodec_ndk,mediacodec,avcodec") // MediaCodec HW acceleration
+
+            // Hardware codec priority chain:
+            //  1. MediaCodec NDK (zero-copy, fastest path)         ← primary HW
+            //  2. MediaCodec JNI (Java wrapper, slightly slower)   ← HW fallback
+            //  3. iomx (legacy OpenMAX, older Snapdragon SoCs)     ← HW fallback
+            //  4. avcodec / FFmpeg                                  ← SW final fallback
+            // VLC tries each codec module in order and falls back automatically
+            // whenever a codec refuses to open (e.g. missing HW support for HEVC Main10).
+            add("--codec=mediacodec_ndk,mediacodec,iomx,avcodec")
+
+            // Tell avcodec to use HW decoding for any codec it can handle
+            // (complements the codec list above for mixed HW+SW pipelines)
+            add("--avcodec-hw=any")
+
+            // ── Threading — auto-detect optimal core count ────────────────────
+            // 0 = let VLC query Runtime.availableProcessors(); prevents both
+            // under-utilisation on octa-core SoCs and over-subscription on low-RAM devices
+            add("--avcodec-threads=0")
+
+            // ── Frame-drop / low-end device safety valves ─────────────────────
+            // Drop frames that arrive too late to be displayed on time — keeps
+            // audio in sync on devices where 4K decode is CPU-bound
+            add("--drop-late-frames")
+            // Skip non-reference B-frames under sustained load (level 2)
+            // Level 0=none · 1=default · 2=B-frames · 3=non-ref · 4=non-key
+            add("--avcodec-skip-frame=0")          // start conservative (no skips)
+            add("--avcodec-skip-idct=0")           // no IDCT skipping by default
+            // Enable hurry-up mode: VLC adjusts skip level dynamically
+            // when the decoder falls behind schedule
+            add("--avcodec-hurry-up")
+
+            // ── MediaCodec-specific: direct rendering (zero-copy surface output) ─
+            // Keeps decoded frames in GPU memory — critical for 4K to avoid
+            // the CPU copy that would blow RAM on low-end devices
+            add("--mediacodec-dr")
+
+            // ── Buffer tuning ─────────────────────────────────────────────────
+            // Local file caching: 1.5 s gives enough read-ahead for 4K bitrates
+            // without excessive memory use (most 4K HDR = 40–80 Mbps peak)
+            add("--file-caching=1500")
+            add("--disk-caching=1500")
+            // Network caches — generous defaults; VlcNetworkManager can override per-URL
+            add("--live-caching=3000")
+            add("--network-caching=3000")
+
+            // ── Memory / runtime savings ──────────────────────────────────────
+            add("--no-lua")              // disable Lua interpreter (~10 MB saved)
+            add("--no-osd")             // no on-screen display (we render our own UI)
             add("--no-stats")
             add("--no-snapshot-preview")
         })
@@ -184,10 +243,23 @@ class PlayerActivity : ComponentActivity() {
         // Initialize VLC MediaPlayer bound to the LibVLC instance
         vlcMediaPlayer = VlcMediaPlayer(libVLC)
 
-        // Boot controller suite — all three are stateless wrappers; lightweight init
-        vlcSubtitleController = VlcSubtitleController(vlcMediaPlayer)
-        vlcAudioController    = VlcAudioController(vlcMediaPlayer)
-        vlcNetworkManager     = VlcNetworkManager()
+        // Boot controller suite — lightweight stateless wrappers, instantiated once
+        vlcSubtitleController  = VlcSubtitleController(vlcMediaPlayer)
+        vlcAudioController     = VlcAudioController(vlcMediaPlayer)
+        vlcNetworkManager      = VlcNetworkManager()
+        vlcChapterController   = VlcChapterController(vlcMediaPlayer)
+        vlcAspectController    = VlcAspectController(vlcMediaPlayer)
+
+        // ── HW decode failure → automatic SW fallback ─────────────────────────
+        // VLC fires EncounteredError when a codec module definitively fails.
+        // On first error, rebuild the LibVLC engine with SW-only codec order
+        // and reload the current media so playback continues uninterrupted.
+        vlcMediaPlayer.setEventListener { event ->
+            if (event.type == org.videolan.libvlc.MediaPlayer.Event.EncounteredError && hwDecodingActive) {
+                hwDecodingActive = false
+                runOnUiThread { retryWithSoftwareDecoding() }
+            }
+        }
 
         // Create a dedicated SurfaceView and wire VLC video output to it
         vlcSurfaceView = SurfaceView(this).also { sv ->
@@ -295,6 +367,31 @@ class PlayerActivity : ComponentActivity() {
         }
 
         playerApi = PlayerApi(this)
+    }
+
+    /**
+     * Called by Android whenever the Activity enters or exits PiP mode.
+     *
+     * When entering PiP, the Activity is paused (onPause fires) but NOT stopped.
+     * We ensure VLC keeps rendering to the surface, which remains attached and
+     * visible inside the PiP window, giving seamless background playback.
+     */
+    override fun onPictureInPictureModeChanged(
+        isInPictureInPictureMode: Boolean,
+        newConfig: Configuration,
+    ) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
+        if (!::vlcMediaPlayer.isInitialized) return
+
+        if (isInPictureInPictureMode) {
+            // Surface stays attached — tell VLC to keep playing if it paused on
+            // the Activity lifecycle signal (some OEM ROMs fire onPause before PiP)
+            if (!vlcMediaPlayer.isPlaying) {
+                vlcMediaPlayer.play()
+            }
+        }
+        // Exiting PiP: Media3's existing state machine restores the correct
+        // play/pause state via vlcMirrorListener — no extra handling needed here.
     }
 
     override fun onUserLeaveHint() {
@@ -639,6 +736,58 @@ class PlayerActivity : ComponentActivity() {
      * once Media3 transitions to the playing state.
      */
     /**
+     * Called automatically when LibVLC reports a decode error while HW decoding is active.
+     * Re-initialises the LibVLC engine with a SW-only codec list (avcodec / FFmpeg)
+     * and reloads the current media so playback continues without user intervention.
+     *
+     * After this point [hwDecodingActive] remains false for the session — we don't
+     * oscillate between HW and SW to prevent an error loop.
+     */
+    private fun retryWithSoftwareDecoding() {
+        if (!::vlcMediaPlayer.isInitialized || !::libVLC.isInitialized) return
+        val currentUri = intent.data ?: return
+
+        // Release current engine
+        vlcMediaPlayer.setEventListener(null)
+        vlcMediaPlayer.stop()
+        vlcMediaPlayer.vlcVout.detachViews()
+        vlcMediaPlayer.release()
+        libVLC.release()
+
+        // Rebuild LibVLC with SW-only codec — avcodec (FFmpeg) handles virtually
+        // every format and codec combination via pure software decoding
+        libVLC = LibVLC(this, ArrayList<String>().apply {
+            add("--codec=avcodec")        // software-only FFmpeg pipeline
+            add("--avcodec-hw=none")      // explicitly disable HW acceleration
+            add("--avcodec-threads=0")    // still use all cores for SW decode
+            add("--drop-late-frames")
+            add("--file-caching=2000")
+            add("--no-stats")
+            add("--no-snapshot-preview")
+            add("--no-lua")
+            add("--no-osd")
+        })
+
+        // Re-create player and re-attach surface
+        vlcMediaPlayer = org.videolan.libvlc.MediaPlayer(libVLC)
+        val vout = vlcMediaPlayer.vlcVout
+        vlcSurfaceView.holder.surface?.let { surface ->
+            vout.setVideoSurface(surface, vlcSurfaceView.holder)
+            vout.attachViews()
+        }
+
+        // Re-boot controller suite against the new player instance
+        vlcSubtitleController  = VlcSubtitleController(vlcMediaPlayer)
+        vlcAudioController     = VlcAudioController(vlcMediaPlayer)
+        vlcChapterController   = VlcChapterController(vlcMediaPlayer)
+        vlcAspectController    = VlcAspectController(vlcMediaPlayer)
+        // vlcNetworkManager is stateless — no rebuild needed
+
+        // Reload the media with SW engine
+        loadVlcMedia(currentUri)
+    }
+
+    /**
      * Creates a [Media] from a local or content [Uri] and assigns it to [vlcMediaPlayer].
      * Subtitle styling (font / color / shadow) and audio flags (passthrough / spatializer)
      * are injected as media options so they survive playlist transitions.
@@ -655,6 +804,11 @@ class PlayerActivity : ComponentActivity() {
 
         vlcMediaPlayer.media = media
         media.release() // ownership transferred to vlcMediaPlayer; safe to release wrapper
+
+        // Re-apply current aspect mode to the new media surface
+        if (::vlcAspectController.isInitialized) {
+            vlcAspectController.applyMode(vlcAspectController.currentMode)
+        }
     }
 
     /**
