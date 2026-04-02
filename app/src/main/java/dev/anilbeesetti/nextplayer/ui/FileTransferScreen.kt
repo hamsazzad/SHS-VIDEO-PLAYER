@@ -8,6 +8,9 @@ import android.graphics.Color
 import android.net.Uri
 import android.net.wifi.WifiManager
 import android.os.Build
+import android.os.Environment
+import android.provider.Settings
+import androidx.core.content.FileProvider
 import android.provider.MediaStore
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -305,6 +308,18 @@ fun TransferOptionCard(modifier: Modifier = Modifier, icon: androidx.compose.ui.
     }
 }
 
+// ── Storage access helper ────────────────────────────────────────────────────
+// • Android 11+ (API 30): uses isExternalStorageManager() — true only when the
+//   user has granted MANAGE_ALL_FILES_ACCESS_PERMISSION in Settings.
+// • Android 10 (scoped storage): content-URI access works without broad storage.
+// • Android ≤9: READ_EXTERNAL_STORAGE is requested at runtime via permissionsState.
+fun checkStorageAccess(context: Context): Boolean =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        android.os.Environment.isExternalStorageManager()
+    } else {
+        true
+    }
+
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun SendView(context: Context) {
@@ -317,8 +332,22 @@ fun SendView(context: Context) {
     var showQrScanner by remember { mutableStateOf(false) }
     var showPermDialog by remember { mutableStateOf(false) }
 
+    // Bug fix: MANAGE_EXTERNAL_STORAGE cannot be requested via rememberMultiplePermissionsState.
+    // We handle it separately with a system Settings intent for Android 11+.
+    // For Android 9 and below, READ_EXTERNAL_STORAGE covers broad file access.
+    val hasStorageAccess = remember { mutableStateOf(checkStorageAccess(context)) }
+
     val requiredPermissions = buildList {
         add(Manifest.permission.CAMERA)
+        // READ_EXTERNAL_STORAGE is required on Android 9 (API 28) and below
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+            add(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+        // On Android 10+ scoped storage; READ_MEDIA_* handles media access
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            add(Manifest.permission.READ_MEDIA_VIDEO)
+            add(Manifest.permission.READ_MEDIA_AUDIO)
+        }
         add(Manifest.permission.ACCESS_FINE_LOCATION)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             add(Manifest.permission.BLUETOOTH_CONNECT)
@@ -506,6 +535,14 @@ fun ReceiveView(context: Context) {
     var showPermDialog by remember { mutableStateOf(false) }
 
     val requiredPermissions = buildList {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+            add(Manifest.permission.READ_EXTERNAL_STORAGE)
+            add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            add(Manifest.permission.READ_MEDIA_VIDEO)
+            add(Manifest.permission.READ_MEDIA_AUDIO)
+        }
         add(Manifest.permission.ACCESS_FINE_LOCATION)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             add(Manifest.permission.BLUETOOTH_CONNECT)

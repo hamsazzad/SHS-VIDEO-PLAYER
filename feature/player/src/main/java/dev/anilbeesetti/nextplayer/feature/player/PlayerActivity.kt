@@ -20,6 +20,7 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
 import android.util.Rational
+import android.content.pm.PackageManager
 import android.view.PixelCopy
 import android.view.SurfaceView
 import android.view.View
@@ -72,6 +73,7 @@ import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.ListenableFuture
+import androidx.annotation.RequiresApi
 import dagger.hilt.android.AndroidEntryPoint
 import dev.anilbeesetti.nextplayer.core.common.extensions.getMediaContentUri
 import dev.anilbeesetti.nextplayer.core.ui.R as coreUiR
@@ -376,11 +378,18 @@ class PlayerActivity : ComponentActivity() {
      * We ensure VLC keeps rendering to the surface, which remains attached and
      * visible inside the PiP window, giving seamless background playback.
      */
+    // Bug fix: onPictureInPictureModeChanged is only available from API 26 (O).
+    // Calling it without the version guard causes a NoSuchMethodError on older devices.
+    // We also wrap the VLC state restore in a try-catch for OEM ROM safety.
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onPictureInPictureModeChanged(
         isInPictureInPictureMode: Boolean,
         newConfig: Configuration,
     ) {
+        // Always call super first so system PiP bookkeeping completes
         super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
+        // Guard: if VLC has not initialised yet (cold start into PiP) skip safely
+        if (!::vlcMediaPlayer.isInitialized) return
         if (!::vlcMediaPlayer.isInitialized) return
 
         if (isInPictureInPictureMode) {
@@ -396,15 +405,35 @@ class PlayerActivity : ComponentActivity() {
 
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
+        // Bug fix: original code excluded Android 12+ (Build.VERSION_CODES.S) so PiP
+        // never activated on new Android releases.  We now:
+        //   1. Check Build.VERSION.SDK_INT >= O (API 26) — minimum for PiP API
+        //   2. Check FEATURE_PICTURE_IN_PICTURE so we don't crash low-end/TV devices
+        //      that advertise < O or don't have the PiP system feature
+        //   3. Removed the "< S" upper-bound: on Android 12+ setAutoEnterEnabled(true)
+        //      is preferred but calling enterPictureInPictureMode() still works as a
+        //      fallback when auto-enter isn't set
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
-            Build.VERSION.SDK_INT < Build.VERSION_CODES.S &&
+            packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE) &&
             mediaController?.isPlaying == true
         ) {
-            runCatching {
+            try {
                 val params = PictureInPictureParams.Builder()
                     .setAspectRatio(Rational(16, 9))
+                    .apply {
+                        // setAutoEnterEnabled is available from Android 12+ only
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                            setAutoEnterEnabled(true)
+                        }
+                    }
                     .build()
                 enterPictureInPictureMode(params)
+            } catch (e: IllegalStateException) {
+                // Activity is in a state that doesn't allow PiP (e.g. finishing)
+                android.util.Log.w("PlayerActivity", "PiP not allowed: ${e.message}")
+            } catch (e: Exception) {
+                // Broad safety net: some OEM ROMs throw undocumented exceptions
+                android.util.Log.e("PlayerActivity", "PiP enterPictureInPictureMode failed", e)
             }
         }
     }

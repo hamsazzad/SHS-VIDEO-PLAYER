@@ -29,6 +29,15 @@
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.MANAGE_MEDIA" />
 
+    <!-- MANAGE_EXTERNAL_STORAGE — required on Android 11+ (API 30+) for broad
+         file access across all directories. Declared with minSdkVersion so older
+         devices that don't have this permission type are unaffected.
+         FileTransferScreen requests this at runtime via ACTION_MANAGE_APP_ALL_FILES
+         ACCESS_PERMISSION intent; the permission dialog is system-provided. -->
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+
     <application
         android:name=".NextPlayerApplication"
         android:allowBackup="true"

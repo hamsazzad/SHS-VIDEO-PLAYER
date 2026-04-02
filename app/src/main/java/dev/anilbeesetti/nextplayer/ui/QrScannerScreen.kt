@@ -1,5 +1,6 @@
 package dev.anilbeesetti.nextplayer.ui
 
+import android.Manifest
 import android.util.Log
 import android.view.ViewGroup
 import androidx.camera.core.CameraSelector
@@ -16,12 +17,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,13 +46,23 @@ import com.google.mlkit.vision.common.InputImage
 import dev.anilbeesetti.nextplayer.core.ui.designsystem.NextIcons
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.PermissionStatus
+import com.google.accompanist.permissions.rememberPermissionState
 import kotlinx.coroutines.guava.await
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun QrScannerDialog(
     onResult: (String) -> Unit,
     onDismiss: () -> Unit,
 ) {
+    // ── Bug fix: gate camera binding on explicit CAMERA permission ────────────
+    // Previously, QrCameraPreview tried to bind the camera unconditionally.
+    // On devices where CAMERA permission was not yet granted, bindToLifecycle()
+    // threw SecurityException (caught silently) and showed a black "holding" screen.
+    val cameraPermission = rememberPermissionState(Manifest.permission.CAMERA)
+
     Dialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(usePlatformDefaultWidth = false),
@@ -60,23 +73,65 @@ fun QrScannerDialog(
                 .fillMaxHeight(0.75f)
                 .background(Color.Black, shape = RoundedCornerShape(16.dp)),
         ) {
-            QrCameraPreview(
-                modifier = Modifier.fillMaxSize(),
-                onQrScanned = { result ->
-                    onResult(result)
-                    onDismiss()
-                },
-            )
+            when (val status = cameraPermission.status) {
+                is PermissionStatus.Granted -> {
+                    // Permission granted — safe to initialise CameraX
+                    QrCameraPreview(
+                        modifier = Modifier.fillMaxSize(),
+                        onQrScanned = { result ->
+                            onResult(result)
+                            onDismiss()
+                        },
+                    )
+                }
+                is PermissionStatus.Denied -> {
+                    // Show a clear explanation and a one-tap request button
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(24.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Icon(
+                            NextIcons.Camera,
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier
+                                .padding(bottom = 16.dp)
+                                .then(Modifier.fillMaxWidth(0.25f)),
+                        )
+                        Text(
+                            text = if (status.shouldShowRationale)
+                                "Camera access is needed to scan QR codes. Tap below to grant it."
+                            else
+                                "Camera permission is required to scan QR codes.",
+                            color = Color.White,
+                            style = MaterialTheme.typography.bodyMedium,
+                            textAlign = TextAlign.Center,
+                        )
+                        androidx.compose.foundation.layout.Spacer(
+                            modifier = Modifier.height(16.dp),
+                        )
+                        Button(onClick = { cameraPermission.launchPermissionRequest() }) {
+                            Text("Grant Camera Permission")
+                        }
+                    }
+                }
+            }
+
             Column(
                 modifier = Modifier.align(Alignment.TopCenter).padding(top = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(
-                    text = "Point camera at QR code",
-                    color = Color.White,
-                    style = MaterialTheme.typography.titleMedium,
-                    textAlign = TextAlign.Center,
-                )
+                if (cameraPermission.status is PermissionStatus.Granted) {
+                    Text(
+                        text = "Point camera at QR code",
+                        color = Color.White,
+                        style = MaterialTheme.typography.titleMedium,
+                        textAlign = TextAlign.Center,
+                    )
+                }
             }
             IconButton(
                 onClick = onDismiss,
@@ -108,7 +163,9 @@ fun QrCameraPreview(
         }
     }
 
-    LaunchedEffect(previewView) {
+    // Re-bind camera whenever the previewView surface changes OR the lifecycle
+    // owner changes (screen rotation, Dialog recomposition)
+    LaunchedEffect(lifecycleOwner, previewView) {
         val pv = previewView ?: return@LaunchedEffect
         try {
             val provider = ProcessCameraProvider.getInstance(context).await()
@@ -152,8 +209,11 @@ fun QrCameraPreview(
                 preview,
                 imageAnalysis,
             )
+        } catch (exc: SecurityException) {
+            // CAMERA permission revoked between the permission check and bindToLifecycle call
+            Log.e("QrScanner", "Camera permission denied at binding time", exc)
         } catch (exc: Exception) {
-            Log.e("QrScanner", "Camera binding failed", exc)
+            Log.e("QrScanner", "Camera binding failed: ${exc.javaClass.simpleName}", exc)
         }
     }
 

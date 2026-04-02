@@ -1,9 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
+    <!-- App-private cache and files dirs (unchanged) -->
     <cache-path
         name="cache_files"
         path="." />
     <files-path
         name="files_path"
+        path="." />
+
+    <!-- External storage root — required for sharing files from Downloads,
+         DCIM, Movies, Music, etc. on Android 9 (API 28) and below.
+         On Android 10+ scoped storage means files are accessed via content URIs,
+         but we still declare this so FileProvider.getUriForFile() doesn't throw
+         IllegalArgumentException for legacy paths. -->
+    <external-path
+        name="external_files"
+        path="." />
+
+    <!-- App-specific external files dir (getExternalFilesDir) — works on all
+         API levels without WRITE_EXTERNAL_STORAGE -->
+    <external-files-path
+        name="external_app_files"
+        path="." />
+
+    <!-- External cache dir — used for temporary share copies -->
+    <external-cache-path
+        name="external_cache"
         path="." />
 </paths>

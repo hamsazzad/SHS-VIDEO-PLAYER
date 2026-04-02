@@ -9,8 +9,13 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import android.Manifest
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.PermissionStatus
+import com.google.accompanist.permissions.rememberPermissionState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -148,52 +153,118 @@ fun formatFileSize(bytes: Long): String = when {
 }
 
 fun scanMusicFiles(context: Context): List<MusicItem> {
+    // Bug fix — four issues corrected:
+    //
+    // 1. DURATION > 0 filter: some devices (especially those with custom ROMs) store
+    //    ringtones, notification sounds and partial downloads in IS_MUSIC rows with
+    //    DURATION = 0. Adding the filter prevents an empty list that only contained
+    //    those ghost entries.
+    //
+    // 2. Null-safe DATA column: on Android 10+ (scoped storage) the DATA path column
+    //    can return null for files the app did not create.  The previous code used
+    //    getColumnIndexOrThrow which throws an IllegalArgumentException on some
+    //    Android 10 builds where the column is absent entirely.  We use getColumnIndex
+    //    (returns -1 if absent) and fall back to RELATIVE_PATH + display-name for
+    //    folder detection.
+    //
+    // 3. Exception swallowed silently: catch(_: Exception){} hid SecurityException
+    //    (permission denied) and IllegalArgumentException (bad column).  We now log
+    //    the error so developers can diagnose production issues.
+    //
+    // 4. READ_MEDIA_AUDIO / READ_EXTERNAL_STORAGE: the actual permission check
+    //    happens in MusicScreen (see LaunchedEffect) — scanMusicFiles is pure data.
+
     val musicList = mutableListOf<MusicItem>()
     val internalPath = Environment.getExternalStorageDirectory().absolutePath
+
     val collection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
     } else {
         MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
     }
-    val projection = arrayOf(
-        MediaStore.Audio.Media._ID,
-        MediaStore.Audio.Media.TITLE,
-        MediaStore.Audio.Media.ARTIST,
-        MediaStore.Audio.Media.ALBUM,
-        MediaStore.Audio.Media.DURATION,
-        MediaStore.Audio.Media.SIZE,
-        MediaStore.Audio.Media.DATE_ADDED,
-        MediaStore.Audio.Media.DATA,
-    )
-    val selection = "${MediaStore.Audio.Media.IS_MUSIC} != 0"
+
+    // Build projection — include RELATIVE_PATH (API 29+) for scoped-storage folder detection
+    val projection = buildList {
+        add(MediaStore.Audio.Media._ID)
+        add(MediaStore.Audio.Media.TITLE)
+        add(MediaStore.Audio.Media.ARTIST)
+        add(MediaStore.Audio.Media.ALBUM)
+        add(MediaStore.Audio.Media.DURATION)
+        add(MediaStore.Audio.Media.SIZE)
+        add(MediaStore.Audio.Media.DATE_ADDED)
+        add(MediaStore.Audio.Media.DATA)           // may be null on API 29+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            add(MediaStore.Audio.Media.RELATIVE_PATH) // fallback for folder on scoped storage
+        }
+    }.toTypedArray()
+
+    // IS_MUSIC != 0  AND  DURATION > 0  — filters ghost / 0-length rows
+    val selection = "${MediaStore.Audio.Media.IS_MUSIC} != 0 AND ${MediaStore.Audio.Media.DURATION} > 0"
+
     try {
         context.contentResolver.query(collection, projection, selection, null, null)?.use { cursor ->
-            val idCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
+            val idCol    = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
             val titleCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)
             val artistCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)
-            val albumCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM)
-            val durCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
-            val sizeCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE)
-            val dateCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_ADDED)
-            val pathCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
+            val albumCol  = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM)
+            val durCol    = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
+            val sizeCol   = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE)
+            val dateCol   = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_ADDED)
+            // Bug fix: use getColumnIndex (not getColumnIndexOrThrow) for DATA —
+            // absent or null on scoped storage
+            val pathCol        = cursor.getColumnIndex(MediaStore.Audio.Media.DATA)
+            val relativePathCol = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+                cursor.getColumnIndex(MediaStore.Audio.Media.RELATIVE_PATH) else -1
+
             while (cursor.moveToNext()) {
-                val id = cursor.getLong(idCol)
-                val title = cleanMeta(cursor.getString(titleCol), "Unknown Title")
-                val artist = cleanMeta(cursor.getString(artistCol), "Unknown Artist")
-                val album = cleanMeta(cursor.getString(albumCol), "Unknown Album")
+                val id       = cursor.getLong(idCol)
+                val title    = cleanMeta(cursor.getString(titleCol), "Unknown Title")
+                val artist   = cleanMeta(cursor.getString(artistCol), "Unknown Artist")
+                val album    = cleanMeta(cursor.getString(albumCol), "Unknown Album")
                 val duration = cursor.getLong(durCol)
-                val size = cursor.getLong(sizeCol)
+                val size     = cursor.getLong(sizeCol)
                 val dateAdded = cursor.getLong(dateCol) * 1000L
-                val path = cursor.getString(pathCol) ?: ""
+
+                // Prefer absolute DATA path; fall back to empty string (content URI is enough
+                // for playback on API 29+)
+                val path = if (pathCol >= 0) cursor.getString(pathCol) ?: "" else ""
+
                 val uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id)
-                val file = java.io.File(path)
-                val folderPath = file.parent ?: ""
-                val folderName = file.parentFile?.name ?: ""
-                val isOnSdCard = path.isNotEmpty() && !path.startsWith(internalPath)
-                musicList.add(MusicItem(id, title, artist, album, duration, size, dateAdded, path, uri, folderName, folderPath, isOnSdCard))
+
+                // Derive folder info — use DATA path when available, otherwise
+                // parse RELATIVE_PATH (e.g. "Music/Albums/") for the folder name
+                val (folderName, folderPath, isOnSdCard) = when {
+                    path.isNotEmpty() -> {
+                        val file = java.io.File(path)
+                        Triple(
+                            file.parentFile?.name ?: "",
+                            file.parent ?: "",
+                            !path.startsWith(internalPath),
+                        )
+                    }
+                    relativePathCol >= 0 -> {
+                        val rel = cursor.getString(relativePathCol)?.trimEnd('/') ?: ""
+                        val parts = rel.split('/')
+                        Triple(parts.lastOrNull() ?: rel, rel, false)
+                    }
+                    else -> Triple("", "", false)
+                }
+
+                musicList.add(
+                    MusicItem(
+                        id, title, artist, album, duration, size,
+                        dateAdded, path, uri, folderName, folderPath, isOnSdCard,
+                    )
+                )
             }
         }
-    } catch (_: Exception) {}
+    } catch (e: SecurityException) {
+        // READ_MEDIA_AUDIO or READ_EXTERNAL_STORAGE not granted — MusicScreen will
+        // show the permission UI and call scanMusicFiles again once granted
+        android.util.Log.w("MusicScreen", "Storage permission denied: ${e.message}")
+    } catch (e: Exception) {
+        android.util.Log.e("MusicScreen", "scanMusicFiles failed: ${e.javaClass.simpleName}", e)
+    }
     return musicList
 }
 
@@ -319,10 +390,29 @@ fun MusicScreen(modifier: Modifier = Modifier) {
     var showCreatePlaylist by rememberSaveable { mutableStateOf(false) }
     var newPlaylistName by rememberSaveable { mutableStateOf("") }
 
-    LaunchedEffect(Unit) {
-        allSongs = scanMusicFiles(context)
-        favoriteIds = getMusicFavorites(context)
-        recentIds = getRecentMusicIds(context)
+    // Bug fix: call scanMusicFiles ONLY after the appropriate storage permission is
+    // granted.  On API 33+ we need READ_MEDIA_AUDIO; on older versions READ_EXTERNAL_STORAGE.
+    // Previously scanMusicFiles was called unconditionally — on devices where the runtime
+    // permission had not been granted yet the ContentResolver query returned 0 rows and
+    // the music list appeared empty with no explanation.
+    @OptIn(ExperimentalPermissionsApi::class)
+    val storagePermission = rememberPermissionState(
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            Manifest.permission.READ_MEDIA_AUDIO
+        else
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    )
+
+    // Re-scan whenever permission status changes (initial grant or app-settings return)
+    LaunchedEffect(storagePermission.status) {
+        if (storagePermission.status is PermissionStatus.Granted) {
+            allSongs = withContext(Dispatchers.IO) { scanMusicFiles(context) }
+        } else {
+            // Trigger the permission request on first composition
+            storagePermission.launchPermissionRequest()
+        }
+        favoriteIds    = getMusicFavorites(context)
+        recentIds      = getRecentMusicIds(context)
         customPlaylists = getCustomPlaylists(context)
     }
 
