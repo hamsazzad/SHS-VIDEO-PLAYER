@@ -88,7 +88,9 @@ import java.util.concurrent.CopyOnWriteArrayList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.launch
+import android.view.SurfaceHolder
 import org.videolan.libvlc.LibVLC
+import org.videolan.libvlc.MediaPlayer as VlcMediaPlayer
 import kotlinx.coroutines.withContext
 
 val LocalHidePlayerButtonsBackground = compositionLocalOf { false }
@@ -115,13 +117,51 @@ class PlayerActivity : ComponentActivity() {
     // LibVLC engine instance
     private lateinit var libVLC: LibVLC
 
+    // VLC MediaPlayer — bridges the engine to the video output pipeline
+    private lateinit var vlcMediaPlayer: VlcMediaPlayer
+
+    // Dedicated SurfaceView for VLC video frame rendering
+    private lateinit var vlcSurfaceView: SurfaceView
+
     private val subtitleFileSuspendLauncher = registerForSuspendActivityResult(OpenDocument())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Initialize LibVLC engine
-        libVLC = LibVLC(this, ArrayList())
+        // Initialize LibVLC engine with MediaCodec hardware acceleration
+        libVLC = LibVLC(this, ArrayList<String>().apply {
+            add("--codec=mediacodec_ndk,mediacodec,avcodec") // MediaCodec HW acceleration
+            add("--no-stats")
+            add("--no-snapshot-preview")
+        })
+
+        // Initialize VLC MediaPlayer bound to the LibVLC instance
+        vlcMediaPlayer = VlcMediaPlayer(libVLC)
+
+        // Create a dedicated SurfaceView and wire VLC video output to it
+        vlcSurfaceView = SurfaceView(this).also { sv ->
+            sv.layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+            )
+            addContentView(sv, sv.layoutParams)
+            sv.holder.addCallback(object : SurfaceHolder.Callback {
+                override fun surfaceCreated(holder: SurfaceHolder) {
+                    // Link VLC video output to the surface so frames can be rendered
+                    val vout = vlcMediaPlayer.vlcVout
+                    vout.setVideoSurface(holder.surface, holder)
+                    vout.attachViews()
+                }
+                override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
+                    // Notify VLC of surface dimension changes for correct scaling
+                    vlcMediaPlayer.vlcVout.setWindowSize(width, height)
+                }
+                override fun surfaceDestroyed(holder: SurfaceHolder) {
+                    vlcMediaPlayer.vlcVout.detachViews()
+                }
+            })
+        }
+
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
             navigationBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
@@ -475,6 +515,16 @@ class PlayerActivity : ComponentActivity() {
             }
         }
         return null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Release VLC surface + engine resources
+        if (::vlcMediaPlayer.isInitialized) {
+            vlcMediaPlayer.vlcVout.detachViews()
+            vlcMediaPlayer.release()
+        }
+        if (::libVLC.isInitialized) libVLC.release()
     }
 
     override fun onStart() {
