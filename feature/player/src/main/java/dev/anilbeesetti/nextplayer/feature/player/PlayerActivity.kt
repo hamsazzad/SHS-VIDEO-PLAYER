@@ -90,6 +90,7 @@ import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.launch
 import android.view.SurfaceHolder
 import org.videolan.libvlc.LibVLC
+import org.videolan.libvlc.Media
 import org.videolan.libvlc.MediaPlayer as VlcMediaPlayer
 import kotlinx.coroutines.withContext
 
@@ -122,6 +123,37 @@ class PlayerActivity : ComponentActivity() {
 
     // Dedicated SurfaceView for VLC video frame rendering
     private lateinit var vlcSurfaceView: SurfaceView
+
+
+    /**
+     * Mirrors Media3 play/pause/seek events to the LibVLC engine.
+     * This is what actually drives vlcMediaPlayer in sync with the existing UI.
+     */
+    private val vlcMirrorListener = object : Player.Listener {
+        override fun onIsPlayingChanged(isPlaying: Boolean) {
+            if (!::vlcMediaPlayer.isInitialized) return
+            if (isPlaying) vlcMediaPlayer.play() else vlcMediaPlayer.pause()
+        }
+
+        override fun onPositionDiscontinuity(
+            oldPosition: Player.PositionInfo,
+            newPosition: Player.PositionInfo,
+            reason: Int,
+        ) {
+            if (!::vlcMediaPlayer.isInitialized) return
+            // Forward any seek event (user drag, bookmark, A/B repeat) to VLC
+            if (reason == Player.DISCONTINUITY_REASON_SEEK ||
+                reason == Player.DISCONTINUITY_REASON_SEEK_ADJUSTMENT) {
+                vlcMediaPlayer.setTime(newPosition.positionMs)
+            }
+        }
+
+        override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+            // Load the new media item into VLC when the playlist advances
+            val uri = mediaItem?.localConfiguration?.uri ?: return
+            loadVlcMedia(uri)
+        }
+    }
 
     private val subtitleFileSuspendLauncher = registerForSuspendActivityResult(OpenDocument())
 
@@ -183,7 +215,14 @@ class PlayerActivity : ComponentActivity() {
                 }
             }
 
-            CompositionLocalProvider(LocalHidePlayerButtonsBackground provides (uiState.playerPreferences?.hidePlayerButtonsBackground == true)) {
+            CompositionLocalProvider(
+                LocalHidePlayerButtonsBackground provides (uiState.playerPreferences?.hidePlayerButtonsBackground == true),
+                LocalVlcSeekTo provides { ms: Long ->
+                    // Drive VLC's timeline; this is what enables seeking for
+                    // formats that Media3/ExoPlayer reports as non-seekable
+                    if (::vlcMediaPlayer.isInitialized) vlcMediaPlayer.setTime(ms)
+                },
+            ) {
                 NextPlayerTheme(darkTheme = true) {
                     MediaPlayerScreen(
                         player = player,
@@ -536,6 +575,7 @@ class PlayerActivity : ComponentActivity() {
             mediaController?.run {
                 updateKeepScreenOnFlag()
                 addListener(playbackStateListener)
+                addListener(vlcMirrorListener)
                 startPlayback()
             }
         }
@@ -545,6 +585,7 @@ class PlayerActivity : ComponentActivity() {
         mediaController?.run {
             viewModel.playWhenReady = playWhenReady
             removeListener(playbackStateListener)
+            removeListener(vlcMirrorListener)
         }
         val shouldPlayInBackground = playInBackground || playerPreferences?.autoBackgroundPlay == true
         if (subtitleFileSuspendLauncher.isAwaitingResult || !shouldPlayInBackground) {
@@ -570,6 +611,19 @@ class PlayerActivity : ComponentActivity() {
             val sessionToken = SessionToken(applicationContext, ComponentName(applicationContext, PlayerService::class.java))
             controllerFuture = MediaController.Builder(applicationContext, sessionToken).buildAsync()
         }
+    }
+
+
+    /**
+     * Creates a LibVLC [Media] object from [uri] and assigns it to [vlcMediaPlayer].
+     * Does NOT call play() — [vlcMirrorListener.onIsPlayingChanged] handles that
+     * once Media3 transitions to the playing state.
+     */
+    private fun loadVlcMedia(uri: Uri) {
+        if (!::libVLC.isInitialized || !::vlcMediaPlayer.isInitialized) return
+        val media = Media(libVLC, uri)
+        vlcMediaPlayer.media = media
+        media.release() // ownership transferred to vlcMediaPlayer; safe to release wrapper
     }
 
     private fun startPlayback() {
@@ -639,6 +693,10 @@ class PlayerActivity : ComponentActivity() {
                 playWhenReady = viewModel.playWhenReady
                 prepare()
             }
+            // Map the resolved URI into a LibVLC Media object so VLC is ready
+            // to render frames as soon as the surface is attached
+            val vlcUri = mediaContentUri ?: uri
+            loadVlcMedia(vlcUri)
         }
     }
 
