@@ -37,6 +37,22 @@ android {
         }
     }
 
+    // signingConfigs MUST be declared before buildTypes in Kotlin DSL
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("${project.rootDir}/app/debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+        create("release") {
+            storeFile = file("${project.rootDir}/app/shs-new-key.jks")
+            storePassword = "shs12345"
+            keyAlias = "shs_boss"
+            keyPassword = "shs12345"
+        }
+    }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
@@ -59,21 +75,6 @@ android {
             signingConfig = signingConfigs.getByName("debug")
             applicationIdSuffix = ".release"
             matchingFallbacks.add("release")
-        }
-    }
-
-    signingConfigs {
-        getByName("debug") {
-            storeFile = file("${project.rootDir}/app/debug.keystore")
-            storePassword = "android"
-            keyAlias = "androiddebugkey"
-            keyPassword = "android"
-        }
-        create("release") {
-            storeFile = file("${project.rootDir}/app/shs-new-key.jks")
-            storePassword = "shs12345"
-            keyAlias = "shs_boss"
-            keyPassword = "shs12345"
         }
     }
 
