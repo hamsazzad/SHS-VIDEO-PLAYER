@@ -44,7 +44,7 @@ class VlcSubtitleController(private val player: VlcMediaPlayer) {
      * Applied immediately via [VlcMediaPlayer.spuDelay] (microseconds internally).
      */
     fun setDelay(delayMs: Long) {
-        player.spuDelay = delayMs * 1_000L // VLC expects microseconds
+        player.setSpuDelay(delayMs * 1_000L) // VLC expects microseconds
     }
 
     /**
