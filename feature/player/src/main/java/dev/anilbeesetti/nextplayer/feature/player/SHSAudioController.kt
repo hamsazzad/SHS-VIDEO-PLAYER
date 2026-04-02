@@ -1,7 +1,7 @@
 package dev.anilbeesetti.nextplayer.feature.player
 
 import org.videolan.libvlc.Media
-import org.videolan.libvlc.MediaPlayer as VlcMediaPlayer
+import org.videolan.libvlc.MediaPlayer as SHSMediaPlayer
 
 /**
  * Controls all audio-related behaviour through the LibVLC engine.
@@ -9,7 +9,7 @@ import org.videolan.libvlc.MediaPlayer as VlcMediaPlayer
  *  ┌─────────────────────────────────────────────────────────┐
  *  │ Feature              │ LibVLC API                        │
  *  ├─────────────────────────────────────────────────────────┤
- *  │ Audio delay          │ VlcMediaPlayer.audioDelay (µs)    │
+ *  │ Audio delay          │ SHSMediaPlayer.audioDelay (µs)    │
  *  │ 10-Band Equalizer    │ MediaPlayer.Equalizer + setEq()   │
  *  │ Audio passthrough    │ media option ":spdif"             │
  *  │ Spatializer (3-D)    │ media option ":audio-filter=…"    │
@@ -18,7 +18,7 @@ import org.videolan.libvlc.MediaPlayer as VlcMediaPlayer
  * Call [applyToMedia] every time a new [Media] is created so that
  * passthrough and spatializer flags persist across playlist transitions.
  */
-class VlcAudioController(private val player: VlcMediaPlayer) {
+class SHSAudioController(private val player: SHSMediaPlayer) {
 
     // ── State ─────────────────────────────────────────────────────────────────
     var passthroughEnabled: Boolean = false
@@ -60,7 +60,7 @@ class VlcAudioController(private val player: VlcMediaPlayer) {
      * The equalizer remains active until [disableEqualizer] is called.
      */
     fun setEqualizer(preset: EqualizerPreset) {
-        val eq = VlcMediaPlayer.Equalizer.create()
+        val eq = SHSMediaPlayer.Equalizer.create()
         val (preAmp, bands) = presetData(preset)
         eq.setPreAmp(preAmp)
         bands.forEachIndexed { index, gain ->
@@ -77,7 +77,7 @@ class VlcAudioController(private val player: VlcMediaPlayer) {
      */
     fun setCustomEqualizer(preAmp: Float, bands: FloatArray) {
         require(bands.size == 10) { "Exactly 10 band values required" }
-        val eq = VlcMediaPlayer.Equalizer.create()
+        val eq = SHSMediaPlayer.Equalizer.create()
         eq.setPreAmp(preAmp)
         bands.forEachIndexed { index, gain ->
             eq.setAmp(index, gain)

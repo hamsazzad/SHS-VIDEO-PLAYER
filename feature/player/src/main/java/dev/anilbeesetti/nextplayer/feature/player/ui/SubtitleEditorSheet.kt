@@ -44,14 +44,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.anilbeesetti.nextplayer.feature.player.VlcSubtitleController
+import dev.anilbeesetti.nextplayer.feature.player.SHSSubtitleController
 import kotlinx.coroutines.launch
 
 // ─── Subtitle Editor Sheet ────────────────────────────────────────────────────
 //
 // Renders as a translucent bottom sheet over the playing video.
 // Controls:
-//   • Delay ±50 ms steps — applied in real-time via VlcSubtitleController
+//   • Delay ±50 ms steps — applied in real-time via SHSSubtitleController
 //   • Text color picker  — 8 preset colors + apply button
 //   • Font size slider   — small (12) → large (28)
 //   • Shadow toggle
@@ -71,7 +71,7 @@ private val SUBTITLE_COLORS = listOf(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SubtitleEditorSheet(
-    subtitleController: VlcSubtitleController,
+    subtitleController: SHSSubtitleController,
     onDismiss: () -> Unit,
 ) {
     val scope      = rememberCoroutineScope()

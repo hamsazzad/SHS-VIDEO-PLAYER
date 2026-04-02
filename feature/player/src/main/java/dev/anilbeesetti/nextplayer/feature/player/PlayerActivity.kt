@@ -94,7 +94,7 @@ import kotlinx.coroutines.launch
 import android.view.SurfaceHolder
 import org.videolan.libvlc.LibVLC
 import org.videolan.libvlc.Media
-import org.videolan.libvlc.MediaPlayer as VlcMediaPlayer
+import org.videolan.libvlc.MediaPlayer as SHSMediaPlayer
 import kotlinx.coroutines.withContext
 
 val LocalHidePlayerButtonsBackground = compositionLocalOf { false }
@@ -122,7 +122,7 @@ class PlayerActivity : ComponentActivity() {
     private lateinit var libVLC: LibVLC
 
     // VLC MediaPlayer — bridges the engine to the video output pipeline
-    private lateinit var vlcMediaPlayer: VlcMediaPlayer
+    private lateinit var vlcMediaPlayer: SHSMediaPlayer
 
     // Dedicated SurfaceView for VLC video frame rendering
     private lateinit var vlcSurfaceView: SurfaceView
@@ -130,23 +130,23 @@ class PlayerActivity : ComponentActivity() {
     // ── VLC controller suite ──────────────────────────────────────────────────
 
     /** Subtitle delay / font-size / color / shadow control. */
-    lateinit var vlcSubtitleController: VlcSubtitleController
+    lateinit var shsSubtitleController: SHSSubtitleController
         private set
 
     /** Audio delay / 10-band EQ / passthrough / spatializer control. */
-    lateinit var vlcAudioController: VlcAudioController
+    lateinit var shsAudioController: SHSAudioController
         private set
 
     /** Network stream loader — HLS / RTSP / RTMP / SMB / FTP / DLNA. */
-    lateinit var vlcNetworkManager: VlcNetworkManager
+    lateinit var shsNetworkManager: SHSNetworkManager
         private set
 
     /** Chapter list retrieval and chapter-indexed seeking (fixes non-seekable files). */
-    lateinit var vlcChapterController: VlcChapterController
+    lateinit var shsChapterController: SHSChapterController
         private set
 
     /** Aspect ratio and crop-mode control (Fit / Fill / 16:9 / 4:3 / Stretch). */
-    lateinit var vlcAspectController: VlcAspectController
+    lateinit var shsAspectController: SHSAspectController
         private set
 
     /** True while HW decoding is active; flipped to false on decode error. */
@@ -231,7 +231,7 @@ class PlayerActivity : ComponentActivity() {
             // without excessive memory use (most 4K HDR = 40–80 Mbps peak)
             add("--file-caching=1500")
             add("--disk-caching=1500")
-            // Network caches — generous defaults; VlcNetworkManager can override per-URL
+            // Network caches — generous defaults; SHSNetworkManager can override per-URL
             add("--live-caching=3000")
             add("--network-caching=3000")
 
@@ -243,14 +243,14 @@ class PlayerActivity : ComponentActivity() {
         })
 
         // Initialize VLC MediaPlayer bound to the LibVLC instance
-        vlcMediaPlayer = VlcMediaPlayer(libVLC)
+        vlcMediaPlayer = SHSMediaPlayer(libVLC)
 
         // Boot controller suite — lightweight stateless wrappers, instantiated once
-        vlcSubtitleController  = VlcSubtitleController(vlcMediaPlayer)
-        vlcAudioController     = VlcAudioController(vlcMediaPlayer)
-        vlcNetworkManager      = VlcNetworkManager()
-        vlcChapterController   = VlcChapterController(vlcMediaPlayer)
-        vlcAspectController    = VlcAspectController(vlcMediaPlayer)
+        shsSubtitleController  = SHSSubtitleController(vlcMediaPlayer)
+        shsAudioController     = SHSAudioController(vlcMediaPlayer)
+        shsNetworkManager      = SHSNetworkManager()
+        shsChapterController   = SHSChapterController(vlcMediaPlayer)
+        shsAspectController    = SHSAspectController(vlcMediaPlayer)
 
         // ── HW decode failure → automatic SW fallback ─────────────────────────
         // VLC fires EncounteredError when a codec module definitively fails.
@@ -310,7 +310,7 @@ class PlayerActivity : ComponentActivity() {
 
             CompositionLocalProvider(
                 LocalHidePlayerButtonsBackground provides (uiState.playerPreferences?.hidePlayerButtonsBackground == true),
-                LocalVlcSeekTo provides { ms: Long ->
+                LocalSHSSeekTo provides { ms: Long ->
                     // Drive VLC's timeline; this is what enables seeking for
                     // formats that Media3/ExoPlayer reports as non-seekable
                     if (::vlcMediaPlayer.isInitialized) vlcMediaPlayer.setTime(ms)
@@ -806,11 +806,11 @@ class PlayerActivity : ComponentActivity() {
         }
 
         // Re-boot controller suite against the new player instance
-        vlcSubtitleController  = VlcSubtitleController(vlcMediaPlayer)
-        vlcAudioController     = VlcAudioController(vlcMediaPlayer)
-        vlcChapterController   = VlcChapterController(vlcMediaPlayer)
-        vlcAspectController    = VlcAspectController(vlcMediaPlayer)
-        // vlcNetworkManager is stateless — no rebuild needed
+        shsSubtitleController  = SHSSubtitleController(vlcMediaPlayer)
+        shsAudioController     = SHSAudioController(vlcMediaPlayer)
+        shsChapterController   = SHSChapterController(vlcMediaPlayer)
+        shsAspectController    = SHSAspectController(vlcMediaPlayer)
+        // shsNetworkManager is stateless — no rebuild needed
 
         // Reload the media with SW engine
         loadVlcMedia(currentUri)
@@ -826,17 +826,17 @@ class PlayerActivity : ComponentActivity() {
         val media = Media(libVLC, uri)
 
         // Inject per-media subtitle styling (font size, color, shadow)
-        if (::vlcSubtitleController.isInitialized) vlcSubtitleController.applyToMedia(media)
+        if (::shsSubtitleController.isInitialized) shsSubtitleController.applyToMedia(media)
 
         // Inject per-media audio flags (passthrough, spatializer)
-        if (::vlcAudioController.isInitialized) vlcAudioController.applyToMedia(media)
+        if (::shsAudioController.isInitialized) shsAudioController.applyToMedia(media)
 
         vlcMediaPlayer.media = media
         media.release() // ownership transferred to vlcMediaPlayer; safe to release wrapper
 
         // Re-apply current aspect mode to the new media surface
-        if (::vlcAspectController.isInitialized) {
-            vlcAspectController.applyMode(vlcAspectController.currentMode)
+        if (::shsAspectController.isInitialized) {
+            shsAspectController.applyMode(shsAspectController.currentMode)
         }
     }
 
@@ -855,11 +855,11 @@ class PlayerActivity : ComponentActivity() {
     fun loadNetworkStream(url: String) {
         if (!::libVLC.isInitialized || !::vlcMediaPlayer.isInitialized) return
 
-        val media = vlcNetworkManager.createMedia(url, libVLC)
+        val media = shsNetworkManager.createMedia(url, libVLC)
 
         // Apply subtitle and audio settings to the network media as well
-        if (::vlcSubtitleController.isInitialized) vlcSubtitleController.applyToMedia(media)
-        if (::vlcAudioController.isInitialized) vlcAudioController.applyToMedia(media)
+        if (::shsSubtitleController.isInitialized) shsSubtitleController.applyToMedia(media)
+        if (::shsAudioController.isInitialized) shsAudioController.applyToMedia(media)
 
         vlcMediaPlayer.media = media
         media.release()

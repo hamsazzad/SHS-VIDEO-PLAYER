@@ -568,8 +568,8 @@ fun MediaPlayerScreen(
 
     val context = androidx.compose.ui.platform.LocalContext.current
     val activity = context as? dev.anilbeesetti.nextplayer.feature.player.PlayerActivity
-    val vlcSubtitleControllerRef = runCatching { activity?.vlcSubtitleController }.getOrNull()
-    val vlcAudioControllerRef    = runCatching { activity?.vlcAudioController }.getOrNull()
+    val shsSubtitleControllerRef = runCatching { activity?.shsSubtitleController }.getOrNull()
+    val shsAudioControllerRef    = runCatching { activity?.shsAudioController }.getOrNull()
 
     if (showSubtitleSearch) {
         SubtitleSearchSheet(
@@ -589,17 +589,17 @@ fun MediaPlayerScreen(
         )
     }
 
-    if (showSubtitleEditor && vlcSubtitleControllerRef != null) {
+    if (showSubtitleEditor && shsSubtitleControllerRef != null) {
         SubtitleEditorSheet(
-            subtitleController = vlcSubtitleControllerRef,
+            subtitleController = shsSubtitleControllerRef,
             onDismiss = { showSubtitleEditor = false },
         )
     }
 
-    if (showAudioEditor && vlcAudioControllerRef != null) {
+    if (showAudioEditor && shsAudioControllerRef != null) {
         AudioEditorSheet(
             player = player,
-            vlcAudioController = vlcAudioControllerRef,
+            shsAudioController = shsAudioControllerRef,
             audioEqualizerState = audioEqualizerState,
             onDismiss = { showAudioEditor = false },
         )

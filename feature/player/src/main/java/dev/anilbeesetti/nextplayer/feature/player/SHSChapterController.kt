@@ -1,6 +1,6 @@
 package dev.anilbeesetti.nextplayer.feature.player
 
-import org.videolan.libvlc.MediaPlayer as VlcMediaPlayer
+import org.videolan.libvlc.MediaPlayer as SHSMediaPlayer
 
 /**
  * Chapter navigation and chapter-indexed seeking for the LibVLC engine.
@@ -19,10 +19,10 @@ import org.videolan.libvlc.MediaPlayer as VlcMediaPlayer
  * When a container has no byte-range index (many MPEG-TS streams, older AVI),
  * ExoPlayer / Media3 refuses to seek because it cannot compute the byte offset.
  * VLC's demuxer builds its own index from I-frame positions and chapter tables,
- * so [VlcMediaPlayer.chapter] navigation succeeds even when [setTime] would hang
+ * so [SHSMediaPlayer.chapter] navigation succeeds even when [setTime] would hang
  * or produce wrong results.
  */
-class VlcChapterController(private val player: VlcMediaPlayer) {
+class SHSChapterController(private val player: SHSMediaPlayer) {
 
     // ── Data model ─────────────────────────────────────────────────────────────
 
@@ -105,10 +105,10 @@ class VlcChapterController(private val player: VlcMediaPlayer) {
     /**
      * Seeks to [timeMs] using the most reliable method available:
      *
-     * 1. Always calls [VlcMediaPlayer.setTime] — works for indexed containers
+     * 1. Always calls [SHSMediaPlayer.setTime] — works for indexed containers
      *    (MP4, MKV with cues, WebM).
      * 2. If the media has chapters, also snaps to the closest chapter boundary
-     *    via [VlcMediaPlayer.chapter] setter — this is VLC's native index, which
+     *    via [SHSMediaPlayer.chapter] setter — this is VLC's native index, which
      *    works even when byte-range seeking fails (MPEG-TS, non-indexed AVI/MKV).
      *
      * Both calls are always issued; there is no performance cost because VLC

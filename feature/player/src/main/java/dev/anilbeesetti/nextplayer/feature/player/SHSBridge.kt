@@ -8,4 +8,4 @@ import androidx.compose.runtime.compositionLocalOf
  * Media3, enabling precise seeking even for formats that Media3 marks as
  * non-seekable (TS streams, non-indexed MKV, etc.).
  */
-val LocalVlcSeekTo = compositionLocalOf<((Long) -> Unit)?> { null }
+val LocalSHSSeekTo = compositionLocalOf<((Long) -> Unit)?> { null }

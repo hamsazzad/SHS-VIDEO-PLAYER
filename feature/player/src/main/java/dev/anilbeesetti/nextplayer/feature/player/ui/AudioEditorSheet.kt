@@ -37,7 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.media3.common.Player
-import dev.anilbeesetti.nextplayer.feature.player.VlcAudioController
+import dev.anilbeesetti.nextplayer.feature.player.SHSAudioController
 import dev.anilbeesetti.nextplayer.feature.player.state.AudioEqualizerState
 import kotlinx.coroutines.launch
 
@@ -45,31 +45,31 @@ import kotlinx.coroutines.launch
 //
 // Bottom sheet rendered over the playing video (no playback interruption).
 // Sections:
-//   1. EQ Presets  — one-tap named presets via VlcAudioController
+//   1. EQ Presets  — one-tap named presets via SHSAudioController
 //   2. 10-Band EQ  — per-band sliders via AudioEqualizerState (system Audio FX)
-//   3. Audio Delay — real-time +/- via VlcAudioController.setDelay()
+//   3. Audio Delay — real-time +/- via SHSAudioController.setDelay()
 //   4. Audio Tracks — list of available tracks from Media3 player
 
 private data class EqPreset(
     val name: String,
-    val preset: VlcAudioController.EqualizerPreset,
+    val preset: SHSAudioController.EqualizerPreset,
 )
 
 private val EQ_PRESETS = listOf(
-    EqPreset("Flat",      VlcAudioController.EqualizerPreset.FLAT),
-    EqPreset("Bass",      VlcAudioController.EqualizerPreset.BASS_BOOST),
-    EqPreset("Rock",      VlcAudioController.EqualizerPreset.ROCK),
-    EqPreset("Pop",       VlcAudioController.EqualizerPreset.POP),
-    EqPreset("Jazz",      VlcAudioController.EqualizerPreset.JAZZ),
-    EqPreset("Classical", VlcAudioController.EqualizerPreset.CLASSICAL),
-    EqPreset("Vocal",     VlcAudioController.EqualizerPreset.VOCAL_BOOST),
+    EqPreset("Flat",      SHSAudioController.EqualizerPreset.FLAT),
+    EqPreset("Bass",      SHSAudioController.EqualizerPreset.BASS_BOOST),
+    EqPreset("Rock",      SHSAudioController.EqualizerPreset.ROCK),
+    EqPreset("Pop",       SHSAudioController.EqualizerPreset.POP),
+    EqPreset("Jazz",      SHSAudioController.EqualizerPreset.JAZZ),
+    EqPreset("Classical", SHSAudioController.EqualizerPreset.CLASSICAL),
+    EqPreset("Vocal",     SHSAudioController.EqualizerPreset.VOCAL_BOOST),
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AudioEditorSheet(
     player: Player,
-    vlcAudioController: VlcAudioController,
+    shsAudioController: SHSAudioController,
     audioEqualizerState: AudioEqualizerState?,
     onDismiss: () -> Unit,
 ) {
@@ -77,7 +77,7 @@ fun AudioEditorSheet(
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     var delayMs        by remember { mutableLongStateOf(0L) }
-    var selectedPreset by remember { mutableStateOf<VlcAudioController.EqualizerPreset?>(null) }
+    var selectedPreset by remember { mutableStateOf<SHSAudioController.EqualizerPreset?>(null) }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -109,7 +109,7 @@ fun AudioEditorSheet(
                         selected = selectedPreset == item.preset,
                         onClick = {
                             selectedPreset = item.preset
-                            vlcAudioController.setEqualizer(item.preset)
+                            shsAudioController.setEqualizer(item.preset)
                         },
                         label = { Text(item.name) },
                     )
@@ -165,11 +165,11 @@ fun AudioEditorSheet(
             ) {
                 AudioDelayButton("-500ms") {
                     delayMs -= 500
-                    vlcAudioController.setDelay(delayMs)
+                    shsAudioController.setDelay(delayMs)
                 }
                 AudioDelayButton("-50ms") {
                     delayMs -= 50
-                    vlcAudioController.setDelay(delayMs)
+                    shsAudioController.setDelay(delayMs)
                 }
                 Text(
                     "${if (delayMs >= 0) "+" else ""}${delayMs} ms",
@@ -180,15 +180,15 @@ fun AudioEditorSheet(
                 )
                 AudioDelayButton("+50ms") {
                     delayMs += 50
-                    vlcAudioController.setDelay(delayMs)
+                    shsAudioController.setDelay(delayMs)
                 }
                 AudioDelayButton("+500ms") {
                     delayMs += 500
-                    vlcAudioController.setDelay(delayMs)
+                    shsAudioController.setDelay(delayMs)
                 }
             }
             TextButton(
-                onClick = { delayMs = 0; vlcAudioController.setDelay(0) },
+                onClick = { delayMs = 0; shsAudioController.setDelay(0) },
                 modifier = Modifier.align(Alignment.End),
             ) { Text("Reset delay") }
 

@@ -1,15 +1,15 @@
 package dev.anilbeesetti.nextplayer.feature.player
 
 import dev.anilbeesetti.nextplayer.core.model.VideoContentScale
-import org.videolan.libvlc.MediaPlayer as VlcMediaPlayer
+import org.videolan.libvlc.MediaPlayer as SHSMediaPlayer
 
 /**
  * Controls video aspect ratio and crop mode for the LibVLC render pipeline.
  *
  * LibVLC's two key levers:
- *   • [VlcMediaPlayer.aspectRatio] — force a specific pixel aspect ratio string
+ *   • [SHSMediaPlayer.aspectRatio] — force a specific pixel aspect ratio string
  *     ("16:9", "4:3", "1:1", …) or null for source-native
- *   • [VlcMediaPlayer.scale]       — 0f = auto-fit inside surface; 1f = 100 %
+ *   • [SHSMediaPlayer.scale]       — 0f = auto-fit inside surface; 1f = 100 %
  *     pixel crop (fill and crop edges); values > 1 zoom further
  *
  * ── Modes ────────────────────────────────────────────────────────────────────
@@ -23,7 +23,7 @@ import org.videolan.libvlc.MediaPlayer as VlcMediaPlayer
  * [applyFromContentScale] bridges the existing [VideoContentScale] enum used by
  * the Media3/ExoPlayer layer so VLC stays in sync without changing any Compose UI.
  */
-class VlcAspectController(private val player: VlcMediaPlayer) {
+class SHSAspectController(private val player: SHSMediaPlayer) {
 
     // ── Aspect mode enum ──────────────────────────────────────────────────────
 
@@ -47,7 +47,7 @@ class VlcAspectController(private val player: VlcMediaPlayer) {
     // ── Application ───────────────────────────────────────────────────────────
 
     /**
-     * Apply [mode] immediately to the running [VlcMediaPlayer].
+     * Apply [mode] immediately to the running [SHSMediaPlayer].
      * Safe to call at any time — VLC applies the change to the next decoded frame.
      */
     fun applyMode(mode: AspectMode) {

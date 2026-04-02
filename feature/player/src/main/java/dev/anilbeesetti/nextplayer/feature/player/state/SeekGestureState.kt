@@ -1,6 +1,6 @@
 package dev.anilbeesetti.nextplayer.feature.player.state
 
-import dev.anilbeesetti.nextplayer.feature.player.LocalVlcSeekTo
+import dev.anilbeesetti.nextplayer.feature.player.LocalSHSSeekTo
 
 import androidx.annotation.OptIn
 import androidx.compose.runtime.Composable
@@ -28,13 +28,13 @@ fun rememberSeekGestureState(
 ): SeekGestureState {
     // Consume the VLC seek bridge provided by PlayerActivity so that
     // SeekGestureState can drive vlcMediaPlayer.setTime() alongside Media3.
-    val vlcSeekTo = LocalVlcSeekTo.current
+    val shsSeekTo = LocalSHSSeekTo.current
     val seekGestureState = remember {
         SeekGestureState(
             player = player,
             sensitivity = sensitivity,
             enableSeekGesture = enableSeekGesture,
-            vlcSeekTo = vlcSeekTo,
+            shsSeekTo = shsSeekTo,
         )
     }
     return seekGestureState
@@ -46,11 +46,11 @@ class SeekGestureState(
     private val enableSeekGesture: Boolean = true,
     private val sensitivity: Float = 0.5f,
     /**
-     * Optional VLC seek function from [LocalVlcSeekTo].
+     * Optional VLC seek function from [LocalSHSSeekTo].
      * When present, seeking bypasses Media3's [Player.isCurrentMediaItemSeekable]
      * restriction, enabling frame-accurate scrubbing for TS, non-indexed MKV, etc.
      */
-    private val vlcSeekTo: ((Long) -> Unit)? = null,
+    private val shsSeekTo: ((Long) -> Unit)? = null,
 ) {
     var isSeeking: Boolean by mutableStateOf(false)
         private set
@@ -79,7 +79,7 @@ class SeekGestureState(
         val seekTarget = value.coerceIn(0L, safeDuration)
         // Drive VLC's timeline directly — setTime() works even for formats
         // that ExoPlayer cannot seek in (TS streams, non-indexed MKV, etc.)
-        vlcSeekTo?.invoke(seekTarget)
+        shsSeekTo?.invoke(seekTarget)
 
         if (value > player.currentPosition) {
             player.seekTo(value.coerceAtMost(if (player.duration >= 0) player.duration else 0L))
@@ -98,7 +98,7 @@ class SeekGestureState(
         if (player.duration == C.TIME_UNSET) return
         // When VLC engine is wired, allow dragging even on formats that
         // Media3 reports as non-seekable (e.g. MPEG-TS, some MKV/AVI files)
-        if (vlcSeekTo == null && !player.isCurrentMediaItemSeekable) return
+        if (shsSeekTo == null && !player.isCurrentMediaItemSeekable) return
 
         isSeeking = true
         seekStartX = offset.x
@@ -112,7 +112,7 @@ class SeekGestureState(
         if (seekStartPosition == null) return
         if (player.duration == C.TIME_UNSET) return
         // VLC can seek even when Media3 cannot — skip the restriction if VLC is wired
-        if (vlcSeekTo == null && !player.isCurrentMediaItemSeekable) return
+        if (shsSeekTo == null && !player.isCurrentMediaItemSeekable) return
         if (player.currentPosition <= 0L && dragAmount < 0) return
         if (player.currentPosition >= player.duration && dragAmount > 0) return
         if (change.isConsumed) return
@@ -127,7 +127,7 @@ class SeekGestureState(
         val seekTarget = newPosition.coerceIn(0L, safeDuration)
         // Use vlcMediaPlayer.setTime() for frame-accurate seeking via VLC's
         // own demuxer — this is the core of the "unseekable video" fix
-        vlcSeekTo?.invoke(seekTarget)
+        shsSeekTo?.invoke(seekTarget)
         player.seekTo(newPosition.coerceIn(0L, player.duration))
     }
 

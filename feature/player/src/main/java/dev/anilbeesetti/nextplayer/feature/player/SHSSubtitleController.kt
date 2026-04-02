@@ -1,7 +1,7 @@
 package dev.anilbeesetti.nextplayer.feature.player
 
 import org.videolan.libvlc.Media
-import org.videolan.libvlc.MediaPlayer as VlcMediaPlayer
+import org.videolan.libvlc.MediaPlayer as SHSMediaPlayer
 
 /**
  * Controls all subtitle-related behaviour through the LibVLC engine.
@@ -14,9 +14,9 @@ import org.videolan.libvlc.MediaPlayer as VlcMediaPlayer
  *
  * Call [applyToMedia] every time a new [Media] object is created so that
  * font, color, and shadow settings survive playlist transitions.
- * [setDelay] applies instantly to the running player via [VlcMediaPlayer.spuDelay].
+ * [setDelay] applies instantly to the running player via [SHSMediaPlayer.spuDelay].
  */
-class VlcSubtitleController(private val player: VlcMediaPlayer) {
+class SHSSubtitleController(private val player: SHSMediaPlayer) {
 
     // ── Stored state — persisted across media reloads ─────────────────────────
     /** Relative font size passed to the FreeType text renderer (default 16). */
@@ -41,7 +41,7 @@ class VlcSubtitleController(private val player: VlcMediaPlayer) {
      * Shift subtitle timing by [delayMs] milliseconds.
      * Positive = subtitles appear later (good when audio leads the subs).
      * Negative = subtitles appear earlier.
-     * Applied immediately via [VlcMediaPlayer.spuDelay] (microseconds internally).
+     * Applied immediately via [SHSMediaPlayer.spuDelay] (microseconds internally).
      */
     fun setDelay(delayMs: Long) {
         player.setSpuDelay(delayMs * 1_000L) // VLC expects microseconds

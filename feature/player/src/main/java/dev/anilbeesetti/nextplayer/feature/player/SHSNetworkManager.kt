@@ -3,7 +3,7 @@ package dev.anilbeesetti.nextplayer.feature.player
 import android.net.Uri
 import org.videolan.libvlc.LibVLC
 import org.videolan.libvlc.Media
-import org.videolan.libvlc.MediaPlayer as VlcMediaPlayer
+import org.videolan.libvlc.MediaPlayer as SHSMediaPlayer
 
 /**
  * Handles network-source media loading for the LibVLC engine.
@@ -20,14 +20,14 @@ import org.videolan.libvlc.MediaPlayer as VlcMediaPlayer
  *  DLNA / UPnP   http:// (UPnP)       DLNA media servers (Kodi, NAS)
  *  ─────────────────────────────────────────────────────────────────────
  *
- * Usage — call from PlayerActivity or VlcBridge:
- *   val manager = VlcNetworkManager()
+ * Usage — call from PlayerActivity or SHSBridge:
+ *   val manager = SHSNetworkManager()
  *   val media = manager.createMedia(url, libVLC)
  *   vlcMediaPlayer.media = media
  *   media.release()
  *   vlcMediaPlayer.play()
  */
-class VlcNetworkManager {
+class SHSNetworkManager {
 
     /** Configurable network buffer in milliseconds. Default: 3 000 ms. */
     var networkCachingMs: Int = 3_000
@@ -73,7 +73,7 @@ class VlcNetworkManager {
      * Build a [Media] object for [url] with protocol-appropriate buffering options.
      *
      * The caller is responsible for calling [Media.release] after assigning the
-     * media to the player (ownership is transferred to [VlcMediaPlayer]).
+     * media to the player (ownership is transferred to [SHSMediaPlayer]).
      */
     fun createMedia(url: String, libVLC: LibVLC): Media {
         val uri = Uri.parse(url)
@@ -99,7 +99,7 @@ class VlcNetworkManager {
      * Convenience overload — load [url] directly into [player].
      * Applies options, assigns to player, releases wrapper, and starts playback.
      */
-    fun loadAndPlay(url: String, player: VlcMediaPlayer, libVLC: LibVLC) {
+    fun loadAndPlay(url: String, player: SHSMediaPlayer, libVLC: LibVLC) {
         val media = createMedia(url, libVLC)
         player.media = media
         media.release()
