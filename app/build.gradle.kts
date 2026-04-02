@@ -41,6 +41,7 @@ android {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
@@ -67,6 +68,12 @@ android {
             storePassword = "android"
             keyAlias = "androiddebugkey"
             keyPassword = "android"
+        }
+        create("release") {
+            storeFile = file("${project.rootDir}/app/shs-new-key.jks")
+            storePassword = "shs12345"
+            keyAlias = "shs_boss"
+            keyPassword = "shs12345"
         }
     }
 
