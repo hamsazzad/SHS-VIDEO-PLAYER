@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.ui.theme
+package com.shs.videoplayer.ui.theme
 
 import android.content.Context
 import android.net.Uri

@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.core.common.extensions
+package com.shs.videoplayer.core.common.extensions
 
 import kotlin.math.pow
 import kotlin.math.roundToInt

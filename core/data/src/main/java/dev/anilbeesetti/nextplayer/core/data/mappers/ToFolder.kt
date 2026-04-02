@@ -1,9 +1,9 @@
-package dev.anilbeesetti.nextplayer.core.data.mappers
+package com.shs.videoplayer.core.data.mappers
 
-import dev.anilbeesetti.nextplayer.core.common.Utils
-import dev.anilbeesetti.nextplayer.core.database.relations.DirectoryWithMedia
-import dev.anilbeesetti.nextplayer.core.database.relations.MediumWithInfo
-import dev.anilbeesetti.nextplayer.core.model.Folder
+import com.shs.videoplayer.core.common.Utils
+import com.shs.videoplayer.core.database.relations.DirectoryWithMedia
+import com.shs.videoplayer.core.database.relations.MediumWithInfo
+import com.shs.videoplayer.core.model.Folder
 
 fun DirectoryWithMedia.toFolder() = Folder(
     name = directory.name,

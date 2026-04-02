@@ -1,11 +1,11 @@
-package dev.anilbeesetti.nextplayer.core.common.di
+package com.shs.videoplayer.core.common.di
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.anilbeesetti.nextplayer.core.common.Dispatcher
-import dev.anilbeesetti.nextplayer.core.common.NextDispatchers
+import com.shs.videoplayer.core.common.Dispatcher
+import com.shs.videoplayer.core.common.NextDispatchers
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 

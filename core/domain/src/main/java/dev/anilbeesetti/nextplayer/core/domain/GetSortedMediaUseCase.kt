@@ -1,10 +1,10 @@
-package dev.anilbeesetti.nextplayer.core.domain
+package com.shs.videoplayer.core.domain
 
-import dev.anilbeesetti.nextplayer.core.common.Dispatcher
-import dev.anilbeesetti.nextplayer.core.common.NextDispatchers
-import dev.anilbeesetti.nextplayer.core.data.repository.PreferencesRepository
-import dev.anilbeesetti.nextplayer.core.model.Folder
-import dev.anilbeesetti.nextplayer.core.model.MediaViewMode
+import com.shs.videoplayer.core.common.Dispatcher
+import com.shs.videoplayer.core.common.NextDispatchers
+import com.shs.videoplayer.core.data.repository.PreferencesRepository
+import com.shs.videoplayer.core.model.Folder
+import com.shs.videoplayer.core.model.MediaViewMode
 import java.io.File
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher

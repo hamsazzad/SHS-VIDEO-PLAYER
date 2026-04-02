@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.state
+package com.shs.videoplayer.feature.player.state
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -13,8 +13,8 @@ import androidx.media3.common.listen
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaController
-import dev.anilbeesetti.nextplayer.feature.player.service.getSkipSilenceEnabled
-import dev.anilbeesetti.nextplayer.feature.player.service.setSkipSilenceEnabled
+import com.shs.videoplayer.feature.player.service.getSkipSilenceEnabled
+import com.shs.videoplayer.feature.player.service.setSkipSilenceEnabled
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

@@ -1,10 +1,10 @@
-package dev.anilbeesetti.nextplayer.core.database.dao
+package com.shs.videoplayer.core.database.dao
 
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import dev.anilbeesetti.nextplayer.core.database.MediaDatabase
-import dev.anilbeesetti.nextplayer.core.database.entities.DirectoryEntity
+import com.shs.videoplayer.core.database.MediaDatabase
+import com.shs.videoplayer.core.database.entities.DirectoryEntity
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Before

@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.buttons
+package com.shs.videoplayer.feature.player.buttons
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
@@ -10,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.media3.common.Player
 import androidx.media3.ui.compose.state.rememberPlayPauseButtonState
-import dev.anilbeesetti.nextplayer.core.ui.R as coreUiR
+import com.shs.videoplayer.core.ui.R as coreUiR
 
 @Composable
 fun PlayPauseButton(player: Player, modifier: Modifier = Modifier) {

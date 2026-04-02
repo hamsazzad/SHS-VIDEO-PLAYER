@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.buttons
+package com.shs.videoplayer.feature.player.buttons
 
 // ─── Button identity ──────────────────────────────────────────────────────────
 //

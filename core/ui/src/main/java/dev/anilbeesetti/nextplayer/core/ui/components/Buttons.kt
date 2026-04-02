@@ -1,11 +1,11 @@
-package dev.anilbeesetti.nextplayer.core.ui.components
+package com.shs.videoplayer.core.ui.components
 
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import dev.anilbeesetti.nextplayer.core.ui.R
+import com.shs.videoplayer.core.ui.R
 
 @Composable
 fun DoneButton(

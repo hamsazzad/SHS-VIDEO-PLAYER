@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.core.media.services
+package com.shs.videoplayer.core.media.services
 
 import android.net.Uri
 import android.os.Build

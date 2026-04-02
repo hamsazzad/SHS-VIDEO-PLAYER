@@ -1,10 +1,10 @@
-package dev.anilbeesetti.nextplayer.settings.screens.medialibrary
+package com.shs.videoplayer.settings.screens.medialibrary
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.anilbeesetti.nextplayer.core.data.repository.PreferencesRepository
-import dev.anilbeesetti.nextplayer.core.model.ApplicationPreferences
+import com.shs.videoplayer.core.data.repository.PreferencesRepository
+import com.shs.videoplayer.core.model.ApplicationPreferences
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

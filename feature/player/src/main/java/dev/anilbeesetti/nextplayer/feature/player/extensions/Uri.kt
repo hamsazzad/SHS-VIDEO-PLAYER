@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.extensions
+package com.shs.videoplayer.feature.player.extensions
 
 import android.content.ContentResolver
 import android.content.Context
@@ -9,8 +9,8 @@ import android.os.Parcelable
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MimeTypes
-import dev.anilbeesetti.nextplayer.core.common.extensions.convertToUTF8
-import dev.anilbeesetti.nextplayer.core.common.extensions.getFilenameFromUri
+import com.shs.videoplayer.core.common.extensions.convertToUTF8
+import com.shs.videoplayer.core.common.extensions.getFilenameFromUri
 import java.nio.charset.Charset
 
 fun Uri.getSubtitleMime(): String {

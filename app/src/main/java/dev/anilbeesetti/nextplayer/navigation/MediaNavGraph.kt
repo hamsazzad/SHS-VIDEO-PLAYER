@@ -1,17 +1,17 @@
-package dev.anilbeesetti.nextplayer.navigation
+package com.shs.videoplayer.navigation
 
 import android.content.Context
 import android.content.Intent
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navigation
-import dev.anilbeesetti.nextplayer.feature.player.PlayerActivity
-import dev.anilbeesetti.nextplayer.feature.player.utils.PlayerApi
-import dev.anilbeesetti.nextplayer.feature.videopicker.navigation.MediaPickerRoute
-import dev.anilbeesetti.nextplayer.feature.videopicker.navigation.mediaPickerScreen
-import dev.anilbeesetti.nextplayer.feature.videopicker.navigation.navigateToMediaPickerScreen
-import dev.anilbeesetti.nextplayer.settings.navigation.navigateToSettings
-import dev.anilbeesetti.nextplayer.ui.moveToVault
+import com.shs.videoplayer.feature.player.PlayerActivity
+import com.shs.videoplayer.feature.player.utils.PlayerApi
+import com.shs.videoplayer.feature.videopicker.navigation.MediaPickerRoute
+import com.shs.videoplayer.feature.videopicker.navigation.mediaPickerScreen
+import com.shs.videoplayer.feature.videopicker.navigation.navigateToMediaPickerScreen
+import com.shs.videoplayer.settings.navigation.navigateToSettings
+import com.shs.videoplayer.ui.moveToVault
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

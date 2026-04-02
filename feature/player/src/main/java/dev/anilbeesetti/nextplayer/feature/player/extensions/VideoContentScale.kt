@@ -1,9 +1,9 @@
-package dev.anilbeesetti.nextplayer.feature.player.extensions
+package com.shs.videoplayer.feature.player.extensions
 
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.FixedScale
-import dev.anilbeesetti.nextplayer.core.model.VideoContentScale
-import dev.anilbeesetti.nextplayer.core.ui.R
+import com.shs.videoplayer.core.model.VideoContentScale
+import com.shs.videoplayer.core.ui.R
 
 fun VideoContentScale.nameRes(): Int = when (this) {
     VideoContentScale.BEST_FIT -> R.string.best_fit

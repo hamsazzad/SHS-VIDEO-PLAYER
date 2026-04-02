@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.core.ui.components
+package com.shs.videoplayer.core.ui.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
-import dev.anilbeesetti.nextplayer.core.ui.designsystem.NextIcons
+import com.shs.videoplayer.core.ui.designsystem.NextIcons
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable

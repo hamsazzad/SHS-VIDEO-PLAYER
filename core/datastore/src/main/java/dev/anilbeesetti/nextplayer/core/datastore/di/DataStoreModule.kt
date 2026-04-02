@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.core.datastore.di
+package com.shs.videoplayer.core.datastore.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -9,13 +9,13 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.anilbeesetti.nextplayer.core.common.Dispatcher
-import dev.anilbeesetti.nextplayer.core.common.NextDispatchers
-import dev.anilbeesetti.nextplayer.core.common.di.ApplicationScope
-import dev.anilbeesetti.nextplayer.core.datastore.serializer.ApplicationPreferencesSerializer
-import dev.anilbeesetti.nextplayer.core.datastore.serializer.PlayerPreferencesSerializer
-import dev.anilbeesetti.nextplayer.core.model.ApplicationPreferences
-import dev.anilbeesetti.nextplayer.core.model.PlayerPreferences
+import com.shs.videoplayer.core.common.Dispatcher
+import com.shs.videoplayer.core.common.NextDispatchers
+import com.shs.videoplayer.core.common.di.ApplicationScope
+import com.shs.videoplayer.core.datastore.serializer.ApplicationPreferencesSerializer
+import com.shs.videoplayer.core.datastore.serializer.PlayerPreferencesSerializer
+import com.shs.videoplayer.core.model.ApplicationPreferences
+import com.shs.videoplayer.core.model.PlayerPreferences
 import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope

@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.ui.controls
+package com.shs.videoplayer.feature.player.ui.controls
 
 import androidx.annotation.OptIn
 import androidx.compose.foundation.Canvas
@@ -45,18 +45,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
-import dev.anilbeesetti.nextplayer.core.model.VideoContentScale
-import dev.anilbeesetti.nextplayer.core.ui.R
-import dev.anilbeesetti.nextplayer.core.ui.extensions.copy
-import dev.anilbeesetti.nextplayer.feature.player.buttons.LoopButton
-import dev.anilbeesetti.nextplayer.feature.player.buttons.PlayerButton
-import dev.anilbeesetti.nextplayer.feature.player.buttons.ShuffleButton
-import dev.anilbeesetti.nextplayer.feature.player.extensions.drawableRes
-import dev.anilbeesetti.nextplayer.feature.player.extensions.noRippleClickable
-import dev.anilbeesetti.nextplayer.feature.player.state.MediaPresentationState
-import dev.anilbeesetti.nextplayer.feature.player.state.durationFormatted
-import dev.anilbeesetti.nextplayer.feature.player.state.pendingPositionFormatted
-import dev.anilbeesetti.nextplayer.feature.player.state.positionFormatted
+import com.shs.videoplayer.core.model.VideoContentScale
+import com.shs.videoplayer.core.ui.R
+import com.shs.videoplayer.core.ui.extensions.copy
+import com.shs.videoplayer.feature.player.buttons.LoopButton
+import com.shs.videoplayer.feature.player.buttons.PlayerButton
+import com.shs.videoplayer.feature.player.buttons.ShuffleButton
+import com.shs.videoplayer.feature.player.extensions.drawableRes
+import com.shs.videoplayer.feature.player.extensions.noRippleClickable
+import com.shs.videoplayer.feature.player.state.MediaPresentationState
+import com.shs.videoplayer.feature.player.state.durationFormatted
+import com.shs.videoplayer.feature.player.state.pendingPositionFormatted
+import com.shs.videoplayer.feature.player.state.positionFormatted
 
 @OptIn(UnstableApi::class)
 @Composable

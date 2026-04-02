@@ -1,6 +1,6 @@
-package dev.anilbeesetti.nextplayer.feature.player.state
+package com.shs.videoplayer.feature.player.state
 
-import dev.anilbeesetti.nextplayer.feature.player.LocalSHSSeekTo
+import com.shs.videoplayer.feature.player.LocalSHSSeekTo
 
 import androidx.annotation.OptIn
 import androidx.compose.runtime.Composable
@@ -14,8 +14,8 @@ import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.media3.common.C
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
-import dev.anilbeesetti.nextplayer.feature.player.extensions.formatted
-import dev.anilbeesetti.nextplayer.feature.player.extensions.setIsScrubbingModeEnabled
+import com.shs.videoplayer.feature.player.extensions.formatted
+import com.shs.videoplayer.feature.player.extensions.setIsScrubbingModeEnabled
 import kotlin.math.abs
 import kotlin.time.Duration.Companion.milliseconds
 

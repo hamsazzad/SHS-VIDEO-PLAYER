@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.ui
+package com.shs.videoplayer.feature.player.ui
 
 import androidx.annotation.OptIn
 import androidx.compose.foundation.border
@@ -33,10 +33,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
-import dev.anilbeesetti.nextplayer.core.common.extensions.round
-import dev.anilbeesetti.nextplayer.core.ui.R
-import dev.anilbeesetti.nextplayer.core.ui.components.NextSwitch
-import dev.anilbeesetti.nextplayer.feature.player.state.rememberPlaybackParametersState
+import com.shs.videoplayer.core.common.extensions.round
+import com.shs.videoplayer.core.ui.R
+import com.shs.videoplayer.core.ui.components.NextSwitch
+import com.shs.videoplayer.feature.player.state.rememberPlaybackParametersState
 
 @OptIn(UnstableApi::class)
 @Composable

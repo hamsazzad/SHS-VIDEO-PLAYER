@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.state
+package com.shs.videoplayer.feature.player.state
 
 import android.view.WindowManager
 import androidx.activity.compose.LocalActivity
@@ -13,9 +13,9 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.core.util.Consumer
-import dev.anilbeesetti.nextplayer.feature.player.PlayerActivity
-import dev.anilbeesetti.nextplayer.feature.player.extensions.brightnessPercentage
-import dev.anilbeesetti.nextplayer.feature.player.extensions.currentBrightness
+import com.shs.videoplayer.feature.player.PlayerActivity
+import com.shs.videoplayer.feature.player.extensions.brightnessPercentage
+import com.shs.videoplayer.feature.player.extensions.currentBrightness
 
 @Composable
 fun rememberBrightnessState(): BrightnessState {

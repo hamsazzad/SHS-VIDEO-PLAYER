@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.state
+package com.shs.videoplayer.feature.player.state
 
 import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
@@ -11,7 +11,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.media3.common.Player
 import androidx.media3.common.listen
-import dev.anilbeesetti.nextplayer.feature.player.extensions.toggleSystemBars
+import com.shs.videoplayer.feature.player.extensions.toggleSystemBars
 import kotlin.time.Duration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job

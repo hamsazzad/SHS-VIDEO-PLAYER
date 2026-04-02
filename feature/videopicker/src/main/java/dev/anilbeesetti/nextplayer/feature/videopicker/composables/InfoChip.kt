@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.videopicker.composables
+package com.shs.videoplayer.feature.videopicker.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding

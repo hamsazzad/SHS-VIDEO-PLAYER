@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.settings.screens.medialibrary
+package com.shs.videoplayer.settings.screens.medialibrary
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,13 +25,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.anilbeesetti.nextplayer.core.ui.R
-import dev.anilbeesetti.nextplayer.core.ui.base.DataState
-import dev.anilbeesetti.nextplayer.core.ui.components.NextTopAppBar
-import dev.anilbeesetti.nextplayer.core.ui.components.SelectablePreference
-import dev.anilbeesetti.nextplayer.core.ui.designsystem.NextIcons
-import dev.anilbeesetti.nextplayer.core.ui.extensions.plus
-import dev.anilbeesetti.nextplayer.core.ui.theme.NextPlayerTheme
+import com.shs.videoplayer.core.ui.R
+import com.shs.videoplayer.core.ui.base.DataState
+import com.shs.videoplayer.core.ui.components.NextTopAppBar
+import com.shs.videoplayer.core.ui.components.SelectablePreference
+import com.shs.videoplayer.core.ui.designsystem.NextIcons
+import com.shs.videoplayer.core.ui.extensions.plus
+import com.shs.videoplayer.core.ui.theme.NextPlayerTheme
 
 @Composable
 fun FolderPreferencesScreen(

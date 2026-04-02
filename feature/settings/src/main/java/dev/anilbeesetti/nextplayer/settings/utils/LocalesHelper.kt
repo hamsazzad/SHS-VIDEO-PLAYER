@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.settings.utils
+package com.shs.videoplayer.settings.utils
 
 import java.util.Locale
 

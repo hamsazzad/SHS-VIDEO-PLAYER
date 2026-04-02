@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.videopicker.composables
+package com.shs.videoplayer.feature.videopicker.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,8 +23,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import dev.anilbeesetti.nextplayer.core.ui.R
-import dev.anilbeesetti.nextplayer.core.ui.designsystem.NextIcons
+import com.shs.videoplayer.core.ui.R
+import com.shs.videoplayer.core.ui.designsystem.NextIcons
 
 const val CIRCULAR_PROGRESS_INDICATOR_TEST_TAG = "circularProgressIndicator"
 

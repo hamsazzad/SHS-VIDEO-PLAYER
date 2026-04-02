@@ -1,10 +1,10 @@
-package dev.anilbeesetti.nextplayer.core.data.repository
+package com.shs.videoplayer.core.data.repository
 
-import dev.anilbeesetti.nextplayer.core.common.di.ApplicationScope
-import dev.anilbeesetti.nextplayer.core.datastore.datasource.AppPreferencesDataSource
-import dev.anilbeesetti.nextplayer.core.datastore.datasource.PlayerPreferencesDataSource
-import dev.anilbeesetti.nextplayer.core.model.ApplicationPreferences
-import dev.anilbeesetti.nextplayer.core.model.PlayerPreferences
+import com.shs.videoplayer.core.common.di.ApplicationScope
+import com.shs.videoplayer.core.datastore.datasource.AppPreferencesDataSource
+import com.shs.videoplayer.core.datastore.datasource.PlayerPreferencesDataSource
+import com.shs.videoplayer.core.model.ApplicationPreferences
+import com.shs.videoplayer.core.model.PlayerPreferences
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted

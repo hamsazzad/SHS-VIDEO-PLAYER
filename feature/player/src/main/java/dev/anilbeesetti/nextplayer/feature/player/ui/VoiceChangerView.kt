@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.ui
+package com.shs.videoplayer.feature.player.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import dev.anilbeesetti.nextplayer.core.ui.R as coreUiR
+import com.shs.videoplayer.core.ui.R as coreUiR
 
 enum class VoiceEffect(val pitch: Float, val speed: Float) {
     NORMAL(1.0f, 1.0f),

@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.optimizer
+package com.shs.videoplayer.optimizer
 
 import android.content.Context
 import android.util.Log

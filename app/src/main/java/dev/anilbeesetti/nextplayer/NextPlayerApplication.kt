@@ -1,11 +1,11 @@
-package dev.anilbeesetti.nextplayer
+package com.shs.videoplayer
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
-import dev.anilbeesetti.nextplayer.core.common.di.ApplicationScope
-import dev.anilbeesetti.nextplayer.core.data.repository.PreferencesRepository
-import dev.anilbeesetti.nextplayer.crash.CrashActivity
-import dev.anilbeesetti.nextplayer.crash.GlobalExceptionHandler
+import com.shs.videoplayer.core.common.di.ApplicationScope
+import com.shs.videoplayer.core.data.repository.PreferencesRepository
+import com.shs.videoplayer.crash.CrashActivity
+import com.shs.videoplayer.crash.GlobalExceptionHandler
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 

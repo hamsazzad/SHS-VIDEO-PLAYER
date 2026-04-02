@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.core.media.model
+package com.shs.videoplayer.core.media.model
 
 import android.net.Uri
 

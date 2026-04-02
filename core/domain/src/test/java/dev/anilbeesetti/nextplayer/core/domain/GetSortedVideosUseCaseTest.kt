@@ -1,9 +1,9 @@
-package dev.anilbeesetti.nextplayer.core.domain
+package com.shs.videoplayer.core.domain
 
-import dev.anilbeesetti.nextplayer.core.data.repository.fake.FakeMediaRepository
-import dev.anilbeesetti.nextplayer.core.data.repository.fake.FakePreferencesRepository
-import dev.anilbeesetti.nextplayer.core.model.Sort
-import dev.anilbeesetti.nextplayer.core.model.Video
+import com.shs.videoplayer.core.data.repository.fake.FakeMediaRepository
+import com.shs.videoplayer.core.data.repository.fake.FakePreferencesRepository
+import com.shs.videoplayer.core.model.Sort
+import com.shs.videoplayer.core.model.Video
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals

@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.videopicker.composables
+package com.shs.videoplayer.feature.videopicker.composables
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -36,16 +36,16 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.anilbeesetti.nextplayer.core.model.ApplicationPreferences
-import dev.anilbeesetti.nextplayer.core.model.MediaLayoutMode
-import dev.anilbeesetti.nextplayer.core.model.MediaViewMode
-import dev.anilbeesetti.nextplayer.core.model.Sort
-import dev.anilbeesetti.nextplayer.core.ui.R
-import dev.anilbeesetti.nextplayer.core.ui.components.CancelButton
-import dev.anilbeesetti.nextplayer.core.ui.components.DoneButton
-import dev.anilbeesetti.nextplayer.core.ui.components.NextDialog
-import dev.anilbeesetti.nextplayer.core.ui.designsystem.NextIcons
-import dev.anilbeesetti.nextplayer.feature.videopicker.extensions.name
+import com.shs.videoplayer.core.model.ApplicationPreferences
+import com.shs.videoplayer.core.model.MediaLayoutMode
+import com.shs.videoplayer.core.model.MediaViewMode
+import com.shs.videoplayer.core.model.Sort
+import com.shs.videoplayer.core.ui.R
+import com.shs.videoplayer.core.ui.components.CancelButton
+import com.shs.videoplayer.core.ui.components.DoneButton
+import com.shs.videoplayer.core.ui.components.NextDialog
+import com.shs.videoplayer.core.ui.designsystem.NextIcons
+import com.shs.videoplayer.feature.videopicker.extensions.name
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable

@@ -1,13 +1,13 @@
-package dev.anilbeesetti.nextplayer.core.database
+package com.shs.videoplayer.core.database
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.anilbeesetti.nextplayer.core.database.dao.BookmarkDao
-import dev.anilbeesetti.nextplayer.core.database.dao.DirectoryDao
-import dev.anilbeesetti.nextplayer.core.database.dao.FavoriteDao
-import dev.anilbeesetti.nextplayer.core.database.dao.MediumDao
+import com.shs.videoplayer.core.database.dao.BookmarkDao
+import com.shs.videoplayer.core.database.dao.DirectoryDao
+import com.shs.videoplayer.core.database.dao.FavoriteDao
+import com.shs.videoplayer.core.database.dao.MediumDao
 
 @Module
 @InstallIn(SingletonComponent::class)

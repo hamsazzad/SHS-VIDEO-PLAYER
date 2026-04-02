@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.videopicker.navigation
+package com.shs.videoplayer.feature.videopicker.navigation
 
 import android.net.Uri
 import androidx.lifecycle.SavedStateHandle
@@ -6,7 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import dev.anilbeesetti.nextplayer.feature.videopicker.screens.mediapicker.MediaPickerRoute
+import com.shs.videoplayer.feature.videopicker.screens.mediapicker.MediaPickerRoute
 import kotlinx.serialization.Serializable
 
 internal const val folderIdArg = "folderId"

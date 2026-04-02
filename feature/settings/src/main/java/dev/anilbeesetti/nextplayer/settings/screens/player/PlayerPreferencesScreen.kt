@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.settings.screens.player
+package com.shs.videoplayer.settings.screens.player
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,26 +29,26 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.anilbeesetti.nextplayer.core.common.extensions.round
-import dev.anilbeesetti.nextplayer.core.model.ControlButtonsPosition
-import dev.anilbeesetti.nextplayer.core.model.DoubleTapGesture
-import dev.anilbeesetti.nextplayer.core.model.PlayerPreferences
-import dev.anilbeesetti.nextplayer.core.model.Resume
-import dev.anilbeesetti.nextplayer.core.model.ScreenOrientation
-import dev.anilbeesetti.nextplayer.core.ui.R
-import dev.anilbeesetti.nextplayer.core.ui.components.ClickablePreferenceItem
-import dev.anilbeesetti.nextplayer.core.ui.components.ListSectionTitle
-import dev.anilbeesetti.nextplayer.core.ui.components.NextDialogWithDoneAndCancelButtons
-import dev.anilbeesetti.nextplayer.core.ui.components.NextTopAppBar
-import dev.anilbeesetti.nextplayer.core.ui.components.PreferenceSlider
-import dev.anilbeesetti.nextplayer.core.ui.components.PreferenceSwitch
-import dev.anilbeesetti.nextplayer.core.ui.components.PreferenceSwitchWithDivider
-import dev.anilbeesetti.nextplayer.core.ui.components.RadioTextButton
-import dev.anilbeesetti.nextplayer.core.ui.designsystem.NextIcons
-import dev.anilbeesetti.nextplayer.core.ui.preview.DayNightPreview
-import dev.anilbeesetti.nextplayer.core.ui.theme.NextPlayerTheme
-import dev.anilbeesetti.nextplayer.settings.composables.OptionsDialog
-import dev.anilbeesetti.nextplayer.settings.extensions.name
+import com.shs.videoplayer.core.common.extensions.round
+import com.shs.videoplayer.core.model.ControlButtonsPosition
+import com.shs.videoplayer.core.model.DoubleTapGesture
+import com.shs.videoplayer.core.model.PlayerPreferences
+import com.shs.videoplayer.core.model.Resume
+import com.shs.videoplayer.core.model.ScreenOrientation
+import com.shs.videoplayer.core.ui.R
+import com.shs.videoplayer.core.ui.components.ClickablePreferenceItem
+import com.shs.videoplayer.core.ui.components.ListSectionTitle
+import com.shs.videoplayer.core.ui.components.NextDialogWithDoneAndCancelButtons
+import com.shs.videoplayer.core.ui.components.NextTopAppBar
+import com.shs.videoplayer.core.ui.components.PreferenceSlider
+import com.shs.videoplayer.core.ui.components.PreferenceSwitch
+import com.shs.videoplayer.core.ui.components.PreferenceSwitchWithDivider
+import com.shs.videoplayer.core.ui.components.RadioTextButton
+import com.shs.videoplayer.core.ui.designsystem.NextIcons
+import com.shs.videoplayer.core.ui.preview.DayNightPreview
+import com.shs.videoplayer.core.ui.theme.NextPlayerTheme
+import com.shs.videoplayer.settings.composables.OptionsDialog
+import com.shs.videoplayer.settings.extensions.name
 
 @Composable
 fun PlayerPreferencesScreen(

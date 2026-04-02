@@ -1,8 +1,8 @@
-package dev.anilbeesetti.nextplayer.core.data.mappers
+package com.shs.videoplayer.core.data.mappers
 
-import dev.anilbeesetti.nextplayer.core.data.models.VideoState
-import dev.anilbeesetti.nextplayer.core.database.converter.UriListConverter
-import dev.anilbeesetti.nextplayer.core.database.entities.MediumStateEntity
+import com.shs.videoplayer.core.data.models.VideoState
+import com.shs.videoplayer.core.database.converter.UriListConverter
+import com.shs.videoplayer.core.database.entities.MediumStateEntity
 
 fun MediumStateEntity.toVideoState(): VideoState {
     return VideoState(

@@ -1,12 +1,12 @@
-package dev.anilbeesetti.nextplayer.settings.screens.appearance
+package com.shs.videoplayer.settings.screens.appearance
 
 import androidx.compose.runtime.Stable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.anilbeesetti.nextplayer.core.data.repository.PreferencesRepository
-import dev.anilbeesetti.nextplayer.core.model.ApplicationPreferences
-import dev.anilbeesetti.nextplayer.core.model.ThemeConfig
+import com.shs.videoplayer.core.data.repository.PreferencesRepository
+import com.shs.videoplayer.core.model.ApplicationPreferences
+import com.shs.videoplayer.core.model.ThemeConfig
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.videopicker.composables
+package com.shs.videoplayer.feature.videopicker.composables
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.OutlinedTextField
@@ -14,10 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
-import dev.anilbeesetti.nextplayer.core.ui.R
-import dev.anilbeesetti.nextplayer.core.ui.components.CancelButton
-import dev.anilbeesetti.nextplayer.core.ui.components.DoneButton
-import dev.anilbeesetti.nextplayer.core.ui.components.NextDialog
+import com.shs.videoplayer.core.ui.R
+import com.shs.videoplayer.core.ui.components.CancelButton
+import com.shs.videoplayer.core.ui.components.DoneButton
+import com.shs.videoplayer.core.ui.components.NextDialog
 import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.delay
 

@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.core.ui.composables
+package com.shs.videoplayer.core.ui.composables
 
 import android.Manifest
 import android.content.Intent
@@ -22,9 +22,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import dev.anilbeesetti.nextplayer.core.ui.R
-import dev.anilbeesetti.nextplayer.core.ui.preview.DayNightPreview
-import dev.anilbeesetti.nextplayer.core.ui.theme.NextPlayerTheme
+import com.shs.videoplayer.core.ui.R
+import com.shs.videoplayer.core.ui.preview.DayNightPreview
+import com.shs.videoplayer.core.ui.theme.NextPlayerTheme
 
 @Composable
 fun PermissionDetailView(

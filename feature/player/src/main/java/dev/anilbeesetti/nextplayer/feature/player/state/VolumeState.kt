@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.state
+package com.shs.videoplayer.feature.player.state
 
 import android.content.BroadcastReceiver
 import android.content.Context

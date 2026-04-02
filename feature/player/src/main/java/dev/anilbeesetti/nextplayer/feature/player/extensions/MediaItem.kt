@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.extensions
+package com.shs.videoplayer.feature.player.extensions
 
 import android.os.Bundle
 import androidx.media3.common.MediaItem

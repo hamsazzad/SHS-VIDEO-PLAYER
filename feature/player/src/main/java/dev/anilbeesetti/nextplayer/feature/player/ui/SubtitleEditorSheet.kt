@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.ui
+package com.shs.videoplayer.feature.player.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -44,7 +44,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.anilbeesetti.nextplayer.feature.player.SHSSubtitleController
+import com.shs.videoplayer.feature.player.SHSSubtitleController
 import kotlinx.coroutines.launch
 
 // ─── Subtitle Editor Sheet ────────────────────────────────────────────────────

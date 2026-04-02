@@ -1,9 +1,9 @@
-package dev.anilbeesetti.nextplayer.core.database.dao
+package com.shs.videoplayer.core.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import dev.anilbeesetti.nextplayer.core.database.entities.BookmarkEntity
+import com.shs.videoplayer.core.database.entities.BookmarkEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

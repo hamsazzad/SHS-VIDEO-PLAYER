@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.core.ui.base
+package com.shs.videoplayer.core.ui.base
 
 sealed class ScreenState {
     data object Loading : ScreenState()

@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.videopicker.composables
+package com.shs.videoplayer.feature.videopicker.composables
 
 import android.net.Uri
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -27,15 +27,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import dev.anilbeesetti.nextplayer.core.model.ApplicationPreferences
-import dev.anilbeesetti.nextplayer.core.model.Folder
-import dev.anilbeesetti.nextplayer.core.model.MediaLayoutMode
-import dev.anilbeesetti.nextplayer.core.model.MediaViewMode
-import dev.anilbeesetti.nextplayer.core.ui.R
-import dev.anilbeesetti.nextplayer.core.ui.components.ListSectionTitle
-import dev.anilbeesetti.nextplayer.core.ui.extensions.plus
-import dev.anilbeesetti.nextplayer.feature.videopicker.state.SelectionManager
-import dev.anilbeesetti.nextplayer.feature.videopicker.state.rememberSelectionManager
+import com.shs.videoplayer.core.model.ApplicationPreferences
+import com.shs.videoplayer.core.model.Folder
+import com.shs.videoplayer.core.model.MediaLayoutMode
+import com.shs.videoplayer.core.model.MediaViewMode
+import com.shs.videoplayer.core.ui.R
+import com.shs.videoplayer.core.ui.components.ListSectionTitle
+import com.shs.videoplayer.core.ui.extensions.plus
+import com.shs.videoplayer.feature.videopicker.state.SelectionManager
+import com.shs.videoplayer.feature.videopicker.state.rememberSelectionManager
 import kotlin.math.abs
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class, ExperimentalPermissionsApi::class)

@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.core.ui.components
+package com.shs.videoplayer.core.ui.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.anilbeesetti.nextplayer.core.ui.designsystem.NextIcons
+import com.shs.videoplayer.core.ui.designsystem.NextIcons
 
 @Composable
 fun PreferenceSwitchWithDivider(

@@ -1,12 +1,12 @@
-package dev.anilbeesetti.nextplayer.settings.navigation
+package com.shs.videoplayer.settings.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
-import dev.anilbeesetti.nextplayer.settings.Setting
-import dev.anilbeesetti.nextplayer.settings.SettingsScreen
+import com.shs.videoplayer.settings.Setting
+import com.shs.videoplayer.settings.SettingsScreen
 
 const val settingsNavigationRoute = "settings_route"
 

@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.ui
+package com.shs.videoplayer.ui
 
 import android.content.Context
 import android.content.Intent
@@ -53,8 +53,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
-import dev.anilbeesetti.nextplayer.core.ui.designsystem.NextIcons
-import dev.anilbeesetti.nextplayer.feature.player.PlayerActivity
+import com.shs.videoplayer.core.ui.designsystem.NextIcons
+import com.shs.videoplayer.feature.player.PlayerActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

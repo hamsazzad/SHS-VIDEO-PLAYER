@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.ui.controls
+package com.shs.videoplayer.feature.player.ui.controls
 
 import androidx.annotation.OptIn
 import androidx.compose.foundation.background
@@ -25,11 +25,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.media3.common.util.UnstableApi
-import dev.anilbeesetti.nextplayer.core.ui.R
-import dev.anilbeesetti.nextplayer.core.ui.extensions.copy
-import dev.anilbeesetti.nextplayer.feature.player.buttons.PlayerButton
-import dev.anilbeesetti.nextplayer.feature.player.buttons.PlayerButtonId
-import dev.anilbeesetti.nextplayer.feature.player.buttons.PlayerButtonLayout
+import com.shs.videoplayer.core.ui.R
+import com.shs.videoplayer.core.ui.extensions.copy
+import com.shs.videoplayer.feature.player.buttons.PlayerButton
+import com.shs.videoplayer.feature.player.buttons.PlayerButtonId
+import com.shs.videoplayer.feature.player.buttons.PlayerButtonLayout
 
 @OptIn(UnstableApi::class)
 @Composable

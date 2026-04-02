@@ -1,7 +1,7 @@
-package dev.anilbeesetti.nextplayer.core.data.mappers
+package com.shs.videoplayer.core.data.mappers
 
-import dev.anilbeesetti.nextplayer.core.database.entities.VideoStreamInfoEntity
-import dev.anilbeesetti.nextplayer.core.model.VideoStreamInfo
+import com.shs.videoplayer.core.database.entities.VideoStreamInfoEntity
+import com.shs.videoplayer.core.model.VideoStreamInfo
 
 fun VideoStreamInfoEntity.toVideoStreamInfo() = VideoStreamInfo(
     index = index,

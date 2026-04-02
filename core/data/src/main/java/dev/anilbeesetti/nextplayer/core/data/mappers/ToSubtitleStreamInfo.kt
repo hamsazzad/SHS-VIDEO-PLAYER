@@ -1,7 +1,7 @@
-package dev.anilbeesetti.nextplayer.core.data.mappers
+package com.shs.videoplayer.core.data.mappers
 
-import dev.anilbeesetti.nextplayer.core.database.entities.SubtitleStreamInfoEntity
-import dev.anilbeesetti.nextplayer.core.model.SubtitleStreamInfo
+import com.shs.videoplayer.core.database.entities.SubtitleStreamInfoEntity
+import com.shs.videoplayer.core.model.SubtitleStreamInfo
 
 fun SubtitleStreamInfoEntity.toSubtitleStreamInfo() = SubtitleStreamInfo(
     index = index,

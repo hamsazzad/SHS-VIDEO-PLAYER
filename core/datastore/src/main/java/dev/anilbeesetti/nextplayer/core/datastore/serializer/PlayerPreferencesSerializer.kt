@@ -1,8 +1,8 @@
-package dev.anilbeesetti.nextplayer.core.datastore.serializer
+package com.shs.videoplayer.core.datastore.serializer
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
-import dev.anilbeesetti.nextplayer.core.model.PlayerPreferences
+import com.shs.videoplayer.core.model.PlayerPreferences
 import java.io.InputStream
 import java.io.OutputStream
 import kotlinx.serialization.SerializationException

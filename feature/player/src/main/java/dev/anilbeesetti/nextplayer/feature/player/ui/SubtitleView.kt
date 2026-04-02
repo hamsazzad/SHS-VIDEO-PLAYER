@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.ui
+package com.shs.videoplayer.feature.player.ui
 
 import android.graphics.Typeface
 import android.util.TypedValue
@@ -14,9 +14,9 @@ import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.ui.CaptionStyleCompat
 import androidx.media3.ui.SubtitleView
-import dev.anilbeesetti.nextplayer.core.model.Font
-import dev.anilbeesetti.nextplayer.feature.player.extensions.toTypeface
-import dev.anilbeesetti.nextplayer.feature.player.state.rememberCuesState
+import com.shs.videoplayer.core.model.Font
+import com.shs.videoplayer.feature.player.extensions.toTypeface
+import com.shs.videoplayer.feature.player.state.rememberCuesState
 
 @OptIn(UnstableApi::class)
 @Composable

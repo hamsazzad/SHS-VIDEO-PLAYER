@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.core.media.sync
+package com.shs.videoplayer.core.media.sync
 
 interface MediaSynchronizer {
     suspend fun refresh(path: String? = null): Boolean

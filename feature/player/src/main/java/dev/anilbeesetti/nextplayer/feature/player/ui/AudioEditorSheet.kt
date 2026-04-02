@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.ui
+package com.shs.videoplayer.feature.player.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,8 +37,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.media3.common.Player
-import dev.anilbeesetti.nextplayer.feature.player.SHSAudioController
-import dev.anilbeesetti.nextplayer.feature.player.state.AudioEqualizerState
+import com.shs.videoplayer.feature.player.SHSAudioController
+import com.shs.videoplayer.feature.player.state.AudioEqualizerState
 import kotlinx.coroutines.launch
 
 // ─── Audio Editor Sheet ───────────────────────────────────────────────────────

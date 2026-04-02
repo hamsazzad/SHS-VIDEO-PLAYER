@@ -1,8 +1,8 @@
-package dev.anilbeesetti.nextplayer.core.datastore.datasource
+package com.shs.videoplayer.core.datastore.datasource
 
 import androidx.datastore.core.DataStore
-import dev.anilbeesetti.nextplayer.core.common.Logger
-import dev.anilbeesetti.nextplayer.core.model.ApplicationPreferences
+import com.shs.videoplayer.core.common.Logger
+import com.shs.videoplayer.core.model.ApplicationPreferences
 import javax.inject.Inject
 
 class AppPreferencesDataSource @Inject constructor(

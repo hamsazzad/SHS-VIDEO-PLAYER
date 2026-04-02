@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.extensions
+package com.shs.videoplayer.feature.player.extensions
 
 import androidx.annotation.OptIn
 import androidx.media3.common.C
@@ -8,8 +8,8 @@ import androidx.media3.common.TrackSelectionOverride
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaController
-import dev.anilbeesetti.nextplayer.core.common.Logger
-import dev.anilbeesetti.nextplayer.feature.player.service.setMediaControllerIsScrubbingModeEnabled
+import com.shs.videoplayer.core.common.Logger
+import com.shs.videoplayer.feature.player.service.setMediaControllerIsScrubbingModeEnabled
 
 /**
  * Switches to selected track.

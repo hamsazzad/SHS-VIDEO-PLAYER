@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.videopicker.composables
+package com.shs.videoplayer.feature.videopicker.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -38,12 +38,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import dev.anilbeesetti.nextplayer.core.model.ApplicationPreferences
-import dev.anilbeesetti.nextplayer.core.model.MediaLayoutMode
-import dev.anilbeesetti.nextplayer.core.model.Video
-import dev.anilbeesetti.nextplayer.core.ui.components.NextSegmentedListItem
-import dev.anilbeesetti.nextplayer.core.ui.designsystem.NextIcons
-import dev.anilbeesetti.nextplayer.core.ui.theme.NextPlayerTheme
+import com.shs.videoplayer.core.model.ApplicationPreferences
+import com.shs.videoplayer.core.model.MediaLayoutMode
+import com.shs.videoplayer.core.model.Video
+import com.shs.videoplayer.core.ui.components.NextSegmentedListItem
+import com.shs.videoplayer.core.ui.designsystem.NextIcons
+import com.shs.videoplayer.core.ui.theme.NextPlayerTheme
 
 @Composable
 fun VideoItem(

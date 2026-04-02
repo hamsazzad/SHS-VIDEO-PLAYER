@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.state
+package com.shs.videoplayer.feature.player.state
 
 import androidx.annotation.IntRange
 import androidx.compose.runtime.Composable
@@ -12,7 +12,7 @@ import androidx.compose.runtime.setValue
 import androidx.media3.common.Player
 import androidx.media3.common.listen
 import androidx.media3.common.util.UnstableApi
-import dev.anilbeesetti.nextplayer.feature.player.extensions.formatted
+import com.shs.videoplayer.feature.player.extensions.formatted
 import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay

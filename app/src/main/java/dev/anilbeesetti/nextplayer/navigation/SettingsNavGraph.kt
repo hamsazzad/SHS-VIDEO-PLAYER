@@ -1,31 +1,31 @@
-package dev.anilbeesetti.nextplayer.navigation
+package com.shs.videoplayer.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navigation
-import dev.anilbeesetti.nextplayer.settings.Setting
-import dev.anilbeesetti.nextplayer.settings.navigation.aboutPreferencesScreen
-import dev.anilbeesetti.nextplayer.settings.navigation.appearancePreferencesScreen
-import dev.anilbeesetti.nextplayer.settings.navigation.audioPreferencesScreen
-import dev.anilbeesetti.nextplayer.settings.navigation.decoderPreferencesScreen
-import dev.anilbeesetti.nextplayer.settings.navigation.folderPreferencesScreen
-import dev.anilbeesetti.nextplayer.settings.navigation.generalPreferencesScreen
-import dev.anilbeesetti.nextplayer.settings.navigation.librariesScreen
-import dev.anilbeesetti.nextplayer.settings.navigation.mediaLibraryPreferencesScreen
-import dev.anilbeesetti.nextplayer.settings.navigation.navigateToAboutPreferences
-import dev.anilbeesetti.nextplayer.settings.navigation.navigateToAppearancePreferences
-import dev.anilbeesetti.nextplayer.settings.navigation.navigateToAudioPreferences
-import dev.anilbeesetti.nextplayer.settings.navigation.navigateToDecoderPreferences
-import dev.anilbeesetti.nextplayer.settings.navigation.navigateToFolderPreferencesScreen
-import dev.anilbeesetti.nextplayer.settings.navigation.navigateToGeneralPreferences
-import dev.anilbeesetti.nextplayer.settings.navigation.navigateToLibraries
-import dev.anilbeesetti.nextplayer.settings.navigation.navigateToMediaLibraryPreferencesScreen
-import dev.anilbeesetti.nextplayer.settings.navigation.navigateToPlayerPreferences
-import dev.anilbeesetti.nextplayer.settings.navigation.navigateToSubtitlePreferences
-import dev.anilbeesetti.nextplayer.settings.navigation.playerPreferencesScreen
-import dev.anilbeesetti.nextplayer.settings.navigation.settingsNavigationRoute
-import dev.anilbeesetti.nextplayer.settings.navigation.settingsScreen
-import dev.anilbeesetti.nextplayer.settings.navigation.subtitlePreferencesScreen
+import com.shs.videoplayer.settings.Setting
+import com.shs.videoplayer.settings.navigation.aboutPreferencesScreen
+import com.shs.videoplayer.settings.navigation.appearancePreferencesScreen
+import com.shs.videoplayer.settings.navigation.audioPreferencesScreen
+import com.shs.videoplayer.settings.navigation.decoderPreferencesScreen
+import com.shs.videoplayer.settings.navigation.folderPreferencesScreen
+import com.shs.videoplayer.settings.navigation.generalPreferencesScreen
+import com.shs.videoplayer.settings.navigation.librariesScreen
+import com.shs.videoplayer.settings.navigation.mediaLibraryPreferencesScreen
+import com.shs.videoplayer.settings.navigation.navigateToAboutPreferences
+import com.shs.videoplayer.settings.navigation.navigateToAppearancePreferences
+import com.shs.videoplayer.settings.navigation.navigateToAudioPreferences
+import com.shs.videoplayer.settings.navigation.navigateToDecoderPreferences
+import com.shs.videoplayer.settings.navigation.navigateToFolderPreferencesScreen
+import com.shs.videoplayer.settings.navigation.navigateToGeneralPreferences
+import com.shs.videoplayer.settings.navigation.navigateToLibraries
+import com.shs.videoplayer.settings.navigation.navigateToMediaLibraryPreferencesScreen
+import com.shs.videoplayer.settings.navigation.navigateToPlayerPreferences
+import com.shs.videoplayer.settings.navigation.navigateToSubtitlePreferences
+import com.shs.videoplayer.settings.navigation.playerPreferencesScreen
+import com.shs.videoplayer.settings.navigation.settingsNavigationRoute
+import com.shs.videoplayer.settings.navigation.settingsScreen
+import com.shs.videoplayer.settings.navigation.subtitlePreferencesScreen
 
 const val SETTINGS_ROUTE = "settings_nav_route"
 

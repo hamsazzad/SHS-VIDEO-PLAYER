@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.ui
+package com.shs.videoplayer.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -41,7 +41,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.anilbeesetti.nextplayer.core.ui.R as coreUiR
+import com.shs.videoplayer.core.ui.R as coreUiR
 
 private const val FACEBOOK_URL = "https://www.facebook.com/profile.php?id=61580853950299"
 private const val TELEGRAM_URL = "https://t.me/aamoviesofficial"

@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.crash
+package com.shs.videoplayer.crash
 
 import android.content.Context
 import android.content.Intent

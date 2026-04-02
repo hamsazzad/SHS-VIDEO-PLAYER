@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.service
+package com.shs.videoplayer.feature.player.service
 
 import android.net.Uri
 import android.os.Bundle

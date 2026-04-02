@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.state
+package com.shs.videoplayer.feature.player.state
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -15,10 +15,10 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.common.listen
 import androidx.media3.common.util.UnstableApi
-import dev.anilbeesetti.nextplayer.core.model.VideoContentScale
-import dev.anilbeesetti.nextplayer.feature.player.extensions.copy
-import dev.anilbeesetti.nextplayer.feature.player.extensions.next
-import dev.anilbeesetti.nextplayer.feature.player.extensions.videoZoom
+import com.shs.videoplayer.core.model.VideoContentScale
+import com.shs.videoplayer.feature.player.extensions.copy
+import com.shs.videoplayer.feature.player.extensions.next
+import com.shs.videoplayer.feature.player.extensions.videoZoom
 import kotlin.math.abs
 
 @UnstableApi

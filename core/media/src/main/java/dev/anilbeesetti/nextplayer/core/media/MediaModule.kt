@@ -1,15 +1,15 @@
-package dev.anilbeesetti.nextplayer.core.media
+package com.shs.videoplayer.core.media
 
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.anilbeesetti.nextplayer.core.media.services.LocalMediaService
-import dev.anilbeesetti.nextplayer.core.media.services.MediaService
-import dev.anilbeesetti.nextplayer.core.media.sync.LocalMediaInfoSynchronizer
-import dev.anilbeesetti.nextplayer.core.media.sync.LocalMediaSynchronizer
-import dev.anilbeesetti.nextplayer.core.media.sync.MediaInfoSynchronizer
-import dev.anilbeesetti.nextplayer.core.media.sync.MediaSynchronizer
+import com.shs.videoplayer.core.media.services.LocalMediaService
+import com.shs.videoplayer.core.media.services.MediaService
+import com.shs.videoplayer.core.media.sync.LocalMediaInfoSynchronizer
+import com.shs.videoplayer.core.media.sync.LocalMediaSynchronizer
+import com.shs.videoplayer.core.media.sync.MediaInfoSynchronizer
+import com.shs.videoplayer.core.media.sync.MediaSynchronizer
 import javax.inject.Singleton
 
 @Module

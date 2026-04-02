@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.ui
+package com.shs.videoplayer.ui
 
 import android.Manifest
 import android.util.Log
@@ -45,7 +45,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
-import dev.anilbeesetti.nextplayer.core.ui.designsystem.NextIcons
+import com.shs.videoplayer.core.ui.designsystem.NextIcons
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
 import com.google.accompanist.permissions.ExperimentalPermissionsApi

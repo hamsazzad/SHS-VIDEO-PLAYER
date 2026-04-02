@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player
+package com.shs.videoplayer.feature.player
 
 import android.annotation.SuppressLint
 import android.app.PictureInPictureParams
@@ -75,17 +75,17 @@ import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.ListenableFuture
 import androidx.annotation.RequiresApi
 import dagger.hilt.android.AndroidEntryPoint
-import dev.anilbeesetti.nextplayer.core.common.extensions.getMediaContentUri
-import dev.anilbeesetti.nextplayer.core.ui.R as coreUiR
-import dev.anilbeesetti.nextplayer.core.ui.theme.NextPlayerTheme
-import dev.anilbeesetti.nextplayer.feature.player.extensions.registerForSuspendActivityResult
-import dev.anilbeesetti.nextplayer.feature.player.extensions.setExtras
-import dev.anilbeesetti.nextplayer.feature.player.extensions.uriToSubtitleConfiguration
-import dev.anilbeesetti.nextplayer.feature.player.service.PlayerService
-import dev.anilbeesetti.nextplayer.feature.player.service.addSubtitleTrack
-import dev.anilbeesetti.nextplayer.feature.player.service.stopPlayerSession
-import dev.anilbeesetti.nextplayer.feature.player.utils.PlayerApi
-import dev.anilbeesetti.nextplayer.feature.player.utils.ScreenshotUtil
+import com.shs.videoplayer.core.common.extensions.getMediaContentUri
+import com.shs.videoplayer.core.ui.R as coreUiR
+import com.shs.videoplayer.core.ui.theme.NextPlayerTheme
+import com.shs.videoplayer.feature.player.extensions.registerForSuspendActivityResult
+import com.shs.videoplayer.feature.player.extensions.setExtras
+import com.shs.videoplayer.feature.player.extensions.uriToSubtitleConfiguration
+import com.shs.videoplayer.feature.player.service.PlayerService
+import com.shs.videoplayer.feature.player.service.addSubtitleTrack
+import com.shs.videoplayer.feature.player.service.stopPlayerSession
+import com.shs.videoplayer.feature.player.utils.PlayerApi
+import com.shs.videoplayer.feature.player.utils.ScreenshotUtil
 import java.io.File
 import java.util.concurrent.CopyOnWriteArrayList
 import kotlinx.coroutines.Dispatchers
@@ -190,56 +190,15 @@ class PlayerActivity : ComponentActivity() {
 
         // ── LibVLC engine — full hardware decoding + 4K/HDR/HEVC optimisation ─────
         libVLC = LibVLC(this, ArrayList<String>().apply {
-
-            // Hardware codec priority chain:
-            //  1. MediaCodec NDK (zero-copy, fastest path)         ← primary HW
-            //  2. MediaCodec JNI (Java wrapper, slightly slower)   ← HW fallback
-            //  3. iomx (legacy OpenMAX, older Snapdragon SoCs)     ← HW fallback
-            //  4. avcodec / FFmpeg                                  ← SW final fallback
-            // VLC tries each codec module in order and falls back automatically
-            // whenever a codec refuses to open (e.g. missing HW support for HEVC Main10).
-            add("--codec=mediacodec_ndk,mediacodec,iomx,avcodec")
-
-            // Tell avcodec to use HW decoding for any codec it can handle
-            // (complements the codec list above for mixed HW+SW pipelines)
-            add("--avcodec-hw=any")
-
-            // ── Threading — auto-detect optimal core count ────────────────────
-            // 0 = let VLC query Runtime.availableProcessors(); prevents both
-            // under-utilisation on octa-core SoCs and over-subscription on low-RAM devices
-            add("--avcodec-threads=0")
-
-            // ── Frame-drop / low-end device safety valves ─────────────────────
-            // Drop frames that arrive too late to be displayed on time — keeps
-            // audio in sync on devices where 4K decode is CPU-bound
-            add("--drop-late-frames")
-            // Skip non-reference B-frames under sustained load (level 2)
-            // Level 0=none · 1=default · 2=B-frames · 3=non-ref · 4=non-key
-            add("--avcodec-skip-frame=0")          // start conservative (no skips)
-            add("--avcodec-skip-idct=0")           // no IDCT skipping by default
-            // Enable hurry-up mode: VLC adjusts skip level dynamically
-            // when the decoder falls behind schedule
-            add("--avcodec-hurry-up")
-
-            // ── MediaCodec-specific: direct rendering (zero-copy surface output) ─
-            // Keeps decoded frames in GPU memory — critical for 4K to avoid
-            // the CPU copy that would blow RAM on low-end devices
-            add("--mediacodec-dr")
-
-            // ── Buffer tuning ─────────────────────────────────────────────────
-            // Local file caching: 1.5 s gives enough read-ahead for 4K bitrates
-            // without excessive memory use (most 4K HDR = 40–80 Mbps peak)
-            add("--file-caching=1500")
-            add("--disk-caching=1500")
-            // Network caches — generous defaults; SHSNetworkManager can override per-URL
-            add("--live-caching=3000")
-            add("--network-caching=3000")
-
-            // ── Memory / runtime savings ──────────────────────────────────────
-            add("--no-lua")              // disable Lua interpreter (~10 MB saved)
-            add("--no-osd")             // no on-screen display (we render our own UI)
+            // Safe minimal options for Android 10+ low-end devices.
+            // Removed: --codec=mediacodec_ndk,iomx, --avcodec-hw=any, --mediacodec-dr
+            // Those flags caused nativeNew() crash when the device lacks the required
+            // HW codec surface support. LibVLC auto-selects the best available codec.
+            add("--no-lua")
+            add("--no-osd")
             add("--no-stats")
-            add("--no-snapshot-preview")
+            add("--file-caching=1500")
+            add("--network-caching=3000")
         })
 
         // Initialize VLC MediaPlayer bound to the LibVLC instance

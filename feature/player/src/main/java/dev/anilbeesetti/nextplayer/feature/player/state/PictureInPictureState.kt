@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.state
+package com.shs.videoplayer.feature.player.state
 
 import android.app.AppOpsManager
 import android.app.PendingIntent
@@ -35,7 +35,7 @@ import androidx.core.net.toUri
 import androidx.core.util.Consumer
 import androidx.media3.common.Player
 import androidx.media3.common.listen
-import dev.anilbeesetti.nextplayer.core.ui.R as coreUiR
+import com.shs.videoplayer.core.ui.R as coreUiR
 
 @Composable
 fun rememberPictureInPictureState(

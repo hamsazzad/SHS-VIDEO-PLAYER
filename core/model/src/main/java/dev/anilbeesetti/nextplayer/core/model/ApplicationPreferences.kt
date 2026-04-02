@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.core.model
+package com.shs.videoplayer.core.model
 
 import kotlinx.serialization.Serializable
 

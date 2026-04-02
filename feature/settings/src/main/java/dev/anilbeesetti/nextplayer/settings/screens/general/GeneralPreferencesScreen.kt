@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.settings.screens.general
+package com.shs.videoplayer.settings.screens.general
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,13 +23,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.anilbeesetti.nextplayer.core.ui.R
-import dev.anilbeesetti.nextplayer.core.ui.components.CancelButton
-import dev.anilbeesetti.nextplayer.core.ui.components.ClickablePreferenceItem
-import dev.anilbeesetti.nextplayer.core.ui.components.ListSectionTitle
-import dev.anilbeesetti.nextplayer.core.ui.components.NextDialog
-import dev.anilbeesetti.nextplayer.core.ui.components.NextTopAppBar
-import dev.anilbeesetti.nextplayer.core.ui.designsystem.NextIcons
+import com.shs.videoplayer.core.ui.R
+import com.shs.videoplayer.core.ui.components.CancelButton
+import com.shs.videoplayer.core.ui.components.ClickablePreferenceItem
+import com.shs.videoplayer.core.ui.components.ListSectionTitle
+import com.shs.videoplayer.core.ui.components.NextDialog
+import com.shs.videoplayer.core.ui.components.NextTopAppBar
+import com.shs.videoplayer.core.ui.designsystem.NextIcons
 
 @Composable
 fun GeneralPreferencesScreen(

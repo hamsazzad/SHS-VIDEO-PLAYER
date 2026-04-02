@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.buttons
+package com.shs.videoplayer.feature.player.buttons
 
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
@@ -15,7 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
-import dev.anilbeesetti.nextplayer.feature.player.LocalHidePlayerButtonsBackground
+import com.shs.videoplayer.feature.player.LocalHidePlayerButtonsBackground
 
 @Composable
 fun PlayerButton(

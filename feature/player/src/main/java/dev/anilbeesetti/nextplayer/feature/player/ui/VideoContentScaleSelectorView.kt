@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.ui
+package com.shs.videoplayer.feature.player.ui
 
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
@@ -6,9 +6,9 @@ import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import dev.anilbeesetti.nextplayer.core.model.VideoContentScale
-import dev.anilbeesetti.nextplayer.core.ui.R
-import dev.anilbeesetti.nextplayer.feature.player.extensions.nameRes
+import com.shs.videoplayer.core.model.VideoContentScale
+import com.shs.videoplayer.core.ui.R
+import com.shs.videoplayer.feature.player.extensions.nameRes
 
 @Composable
 fun BoxScope.VideoContentScaleSelectorView(

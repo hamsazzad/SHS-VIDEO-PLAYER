@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.crash
+package com.shs.videoplayer.crash
 
 import android.content.ClipData
 import android.content.Intent
@@ -54,16 +54,16 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import dev.anilbeesetti.nextplayer.BuildConfig
-import dev.anilbeesetti.nextplayer.MainActivity
-import dev.anilbeesetti.nextplayer.MainActivityUiState
-import dev.anilbeesetti.nextplayer.MainViewModel
-import dev.anilbeesetti.nextplayer.core.ui.R
-import dev.anilbeesetti.nextplayer.core.ui.designsystem.NextIcons
-import dev.anilbeesetti.nextplayer.core.ui.theme.NextPlayerTheme
-import dev.anilbeesetti.nextplayer.shouldUseDarkTheme
-import dev.anilbeesetti.nextplayer.shouldUseDynamicTheming
-import dev.anilbeesetti.nextplayer.shouldUseHighContrastDarkTheme
+import com.shs.videoplayer.BuildConfig
+import com.shs.videoplayer.MainActivity
+import com.shs.videoplayer.MainActivityUiState
+import com.shs.videoplayer.MainViewModel
+import com.shs.videoplayer.core.ui.R
+import com.shs.videoplayer.core.ui.designsystem.NextIcons
+import com.shs.videoplayer.core.ui.theme.NextPlayerTheme
+import com.shs.videoplayer.shouldUseDarkTheme
+import com.shs.videoplayer.shouldUseDynamicTheming
+import com.shs.videoplayer.shouldUseHighContrastDarkTheme
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader

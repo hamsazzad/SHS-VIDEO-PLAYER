@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.core.ui.components
+package com.shs.videoplayer.core.ui.components
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -7,7 +7,7 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import dev.anilbeesetti.nextplayer.core.ui.designsystem.NextIcons
+import com.shs.videoplayer.core.ui.designsystem.NextIcons
 
 @Composable
 fun NextSwitch(

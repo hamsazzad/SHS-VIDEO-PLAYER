@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.videopicker.composables
+package com.shs.videoplayer.feature.videopicker.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,13 +30,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
-import dev.anilbeesetti.nextplayer.core.common.Utils
-import dev.anilbeesetti.nextplayer.core.model.ApplicationPreferences
-import dev.anilbeesetti.nextplayer.core.model.Folder
-import dev.anilbeesetti.nextplayer.core.model.MediaLayoutMode
-import dev.anilbeesetti.nextplayer.core.ui.R
-import dev.anilbeesetti.nextplayer.core.ui.components.NextSegmentedListItem
-import dev.anilbeesetti.nextplayer.core.ui.theme.NextPlayerTheme
+import com.shs.videoplayer.core.common.Utils
+import com.shs.videoplayer.core.model.ApplicationPreferences
+import com.shs.videoplayer.core.model.Folder
+import com.shs.videoplayer.core.model.MediaLayoutMode
+import com.shs.videoplayer.core.ui.R
+import com.shs.videoplayer.core.ui.components.NextSegmentedListItem
+import com.shs.videoplayer.core.ui.theme.NextPlayerTheme
 
 @Composable
 fun FolderItem(

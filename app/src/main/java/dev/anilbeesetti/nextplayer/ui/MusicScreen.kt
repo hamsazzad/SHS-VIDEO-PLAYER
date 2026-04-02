@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.ui
+package com.shs.videoplayer.ui
 
 import android.content.ContentUris
 import android.content.ContentValues
@@ -87,9 +87,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import dev.anilbeesetti.nextplayer.core.ui.R as coreUiR
-import dev.anilbeesetti.nextplayer.core.ui.designsystem.NextIcons
-import dev.anilbeesetti.nextplayer.feature.player.PlayerActivity
+import com.shs.videoplayer.core.ui.R as coreUiR
+import com.shs.videoplayer.core.ui.designsystem.NextIcons
+import com.shs.videoplayer.feature.player.PlayerActivity
 
 // ─── Data Models ─────────────────────────────────────────────────────────────
 

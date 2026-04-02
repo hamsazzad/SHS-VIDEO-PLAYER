@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.core.database.converter
+package com.shs.videoplayer.core.database.converter
 
 import android.net.Uri
 import java.net.URLDecoder

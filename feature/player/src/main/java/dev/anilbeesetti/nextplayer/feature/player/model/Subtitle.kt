@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.model
+package com.shs.videoplayer.feature.player.model
 
 import android.net.Uri
 

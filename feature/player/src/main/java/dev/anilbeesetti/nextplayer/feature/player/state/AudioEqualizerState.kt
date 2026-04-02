@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.state
+package com.shs.videoplayer.feature.player.state
 
 import android.media.audiofx.Equalizer
 import androidx.compose.runtime.Composable
@@ -13,7 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.media3.common.Player
 import androidx.media3.common.listen
 import androidx.media3.session.MediaController
-import dev.anilbeesetti.nextplayer.feature.player.service.getAudioSessionId
+import com.shs.videoplayer.feature.player.service.getAudioSessionId
 
 @Composable
 fun rememberAudioEqualizerState(player: Player?): AudioEqualizerState {

@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.buttons
+package com.shs.videoplayer.feature.player.buttons
 
 import androidx.annotation.OptIn
 import androidx.compose.material3.Icon
@@ -10,8 +10,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.ui.compose.state.rememberShuffleButtonState
-import dev.anilbeesetti.nextplayer.core.ui.R as coreUiR
-import dev.anilbeesetti.nextplayer.feature.player.LocalControlsVisibilityState
+import com.shs.videoplayer.core.ui.R as coreUiR
+import com.shs.videoplayer.feature.player.LocalControlsVisibilityState
 
 @OptIn(UnstableApi::class)
 @Composable

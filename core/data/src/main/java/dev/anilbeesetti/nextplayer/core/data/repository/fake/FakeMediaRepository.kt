@@ -1,10 +1,10 @@
-package dev.anilbeesetti.nextplayer.core.data.repository.fake
+package com.shs.videoplayer.core.data.repository.fake
 
 import android.net.Uri
-import dev.anilbeesetti.nextplayer.core.data.models.VideoState
-import dev.anilbeesetti.nextplayer.core.data.repository.MediaRepository
-import dev.anilbeesetti.nextplayer.core.model.Folder
-import dev.anilbeesetti.nextplayer.core.model.Video
+import com.shs.videoplayer.core.data.models.VideoState
+import com.shs.videoplayer.core.data.repository.MediaRepository
+import com.shs.videoplayer.core.model.Folder
+import com.shs.videoplayer.core.model.Video
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 

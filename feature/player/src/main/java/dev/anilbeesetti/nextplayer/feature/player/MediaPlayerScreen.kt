@@ -1,9 +1,9 @@
-package dev.anilbeesetti.nextplayer.feature.player
+package com.shs.videoplayer.feature.player
 
-import dev.anilbeesetti.nextplayer.feature.player.ui.AudioEditorSheet
-import dev.anilbeesetti.nextplayer.feature.player.ui.EditButtonOrderSheet
-import dev.anilbeesetti.nextplayer.feature.player.ui.SubtitleEditorSheet
-import dev.anilbeesetti.nextplayer.feature.player.ui.SubtitleSearchSheet
+import com.shs.videoplayer.feature.player.ui.AudioEditorSheet
+import com.shs.videoplayer.feature.player.ui.EditButtonOrderSheet
+import com.shs.videoplayer.feature.player.ui.SubtitleEditorSheet
+import com.shs.videoplayer.feature.player.ui.SubtitleSearchSheet
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.annotation.OptIn
@@ -60,42 +60,42 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.media3.common.PlaybackParameters
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
-import dev.anilbeesetti.nextplayer.core.model.ControlButtonsPosition
-import dev.anilbeesetti.nextplayer.core.model.PlayerPreferences
-import dev.anilbeesetti.nextplayer.core.ui.R as coreUiR
-import dev.anilbeesetti.nextplayer.core.ui.extensions.copy
-import dev.anilbeesetti.nextplayer.feature.player.buttons.NextButton
-import dev.anilbeesetti.nextplayer.feature.player.buttons.PlayPauseButton
-import dev.anilbeesetti.nextplayer.feature.player.buttons.PlayerButton
-import dev.anilbeesetti.nextplayer.feature.player.buttons.PreviousButton
-import dev.anilbeesetti.nextplayer.feature.player.state.ControlsVisibilityState
-import dev.anilbeesetti.nextplayer.feature.player.state.VerticalGesture
-import dev.anilbeesetti.nextplayer.feature.player.state.rememberBrightnessState
-import dev.anilbeesetti.nextplayer.feature.player.state.rememberControlsVisibilityState
-import dev.anilbeesetti.nextplayer.feature.player.state.rememberErrorState
-import dev.anilbeesetti.nextplayer.feature.player.state.rememberMediaPresentationState
-import dev.anilbeesetti.nextplayer.feature.player.state.rememberMetadataState
-import dev.anilbeesetti.nextplayer.feature.player.state.rememberPictureInPictureState
-import dev.anilbeesetti.nextplayer.feature.player.state.rememberRotationState
-import dev.anilbeesetti.nextplayer.feature.player.state.rememberSeekGestureState
-import dev.anilbeesetti.nextplayer.feature.player.state.rememberTapGestureState
-import dev.anilbeesetti.nextplayer.feature.player.state.rememberVideoZoomAndContentScaleState
-import dev.anilbeesetti.nextplayer.feature.player.state.rememberAudioEqualizerState
-import dev.anilbeesetti.nextplayer.feature.player.state.rememberVolumeAndBrightnessGestureState
-import dev.anilbeesetti.nextplayer.feature.player.state.rememberVolumeState
-import dev.anilbeesetti.nextplayer.feature.player.state.seekAmountFormatted
-import dev.anilbeesetti.nextplayer.feature.player.state.seekToPositionFormated
-import dev.anilbeesetti.nextplayer.feature.player.ui.BookmarkItem
-import dev.anilbeesetti.nextplayer.feature.player.ui.DoubleTapIndicator
-import dev.anilbeesetti.nextplayer.feature.player.ui.LocalAudioEqualizerState
-import dev.anilbeesetti.nextplayer.feature.player.ui.OverlayShowView
-import dev.anilbeesetti.nextplayer.feature.player.ui.OverlayView
-import dev.anilbeesetti.nextplayer.feature.player.ui.PlaylistItem
-import dev.anilbeesetti.nextplayer.feature.player.ui.SubtitleConfiguration
-import dev.anilbeesetti.nextplayer.feature.player.ui.VerticalProgressView
-import dev.anilbeesetti.nextplayer.feature.player.ui.VoiceEffect
-import dev.anilbeesetti.nextplayer.feature.player.ui.controls.ControlsBottomView
-import dev.anilbeesetti.nextplayer.feature.player.ui.controls.ControlsTopView
+import com.shs.videoplayer.core.model.ControlButtonsPosition
+import com.shs.videoplayer.core.model.PlayerPreferences
+import com.shs.videoplayer.core.ui.R as coreUiR
+import com.shs.videoplayer.core.ui.extensions.copy
+import com.shs.videoplayer.feature.player.buttons.NextButton
+import com.shs.videoplayer.feature.player.buttons.PlayPauseButton
+import com.shs.videoplayer.feature.player.buttons.PlayerButton
+import com.shs.videoplayer.feature.player.buttons.PreviousButton
+import com.shs.videoplayer.feature.player.state.ControlsVisibilityState
+import com.shs.videoplayer.feature.player.state.VerticalGesture
+import com.shs.videoplayer.feature.player.state.rememberBrightnessState
+import com.shs.videoplayer.feature.player.state.rememberControlsVisibilityState
+import com.shs.videoplayer.feature.player.state.rememberErrorState
+import com.shs.videoplayer.feature.player.state.rememberMediaPresentationState
+import com.shs.videoplayer.feature.player.state.rememberMetadataState
+import com.shs.videoplayer.feature.player.state.rememberPictureInPictureState
+import com.shs.videoplayer.feature.player.state.rememberRotationState
+import com.shs.videoplayer.feature.player.state.rememberSeekGestureState
+import com.shs.videoplayer.feature.player.state.rememberTapGestureState
+import com.shs.videoplayer.feature.player.state.rememberVideoZoomAndContentScaleState
+import com.shs.videoplayer.feature.player.state.rememberAudioEqualizerState
+import com.shs.videoplayer.feature.player.state.rememberVolumeAndBrightnessGestureState
+import com.shs.videoplayer.feature.player.state.rememberVolumeState
+import com.shs.videoplayer.feature.player.state.seekAmountFormatted
+import com.shs.videoplayer.feature.player.state.seekToPositionFormated
+import com.shs.videoplayer.feature.player.ui.BookmarkItem
+import com.shs.videoplayer.feature.player.ui.DoubleTapIndicator
+import com.shs.videoplayer.feature.player.ui.LocalAudioEqualizerState
+import com.shs.videoplayer.feature.player.ui.OverlayShowView
+import com.shs.videoplayer.feature.player.ui.OverlayView
+import com.shs.videoplayer.feature.player.ui.PlaylistItem
+import com.shs.videoplayer.feature.player.ui.SubtitleConfiguration
+import com.shs.videoplayer.feature.player.ui.VerticalProgressView
+import com.shs.videoplayer.feature.player.ui.VoiceEffect
+import com.shs.videoplayer.feature.player.ui.controls.ControlsBottomView
+import com.shs.videoplayer.feature.player.ui.controls.ControlsTopView
 import kotlin.time.Duration.Companion.seconds
 
 val LocalControlsVisibilityState = compositionLocalOf<ControlsVisibilityState?> { null }
@@ -567,7 +567,7 @@ fun MediaPlayerScreen(
     // ── New Phase 1+2 sheets ────────────────────────────────────────────────
 
     val context = androidx.compose.ui.platform.LocalContext.current
-    val activity = context as? dev.anilbeesetti.nextplayer.feature.player.PlayerActivity
+    val activity = context as? com.shs.videoplayer.feature.player.PlayerActivity
     val shsSubtitleControllerRef = runCatching { activity?.shsSubtitleController }.getOrNull()
     val shsAudioControllerRef    = runCatching { activity?.shsAudioController }.getOrNull()
 

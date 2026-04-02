@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.core.ui.extensions
+package com.shs.videoplayer.core.ui.extensions
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding

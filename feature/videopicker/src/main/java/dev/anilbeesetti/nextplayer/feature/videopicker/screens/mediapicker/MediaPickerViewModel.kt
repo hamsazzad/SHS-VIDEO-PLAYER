@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.videopicker.screens.mediapicker
+package com.shs.videoplayer.feature.videopicker.screens.mediapicker
 
 import android.net.Uri
 import androidx.compose.runtime.Stable
@@ -7,18 +7,18 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.anilbeesetti.nextplayer.core.common.extensions.prettyName
-import dev.anilbeesetti.nextplayer.core.data.repository.PreferencesRepository
-import dev.anilbeesetti.nextplayer.core.database.dao.FavoriteDao
-import dev.anilbeesetti.nextplayer.core.database.entities.FavoriteEntity
-import dev.anilbeesetti.nextplayer.core.domain.GetSortedMediaUseCase
-import dev.anilbeesetti.nextplayer.core.media.services.MediaService
-import dev.anilbeesetti.nextplayer.core.media.sync.MediaInfoSynchronizer
-import dev.anilbeesetti.nextplayer.core.media.sync.MediaSynchronizer
-import dev.anilbeesetti.nextplayer.core.model.ApplicationPreferences
-import dev.anilbeesetti.nextplayer.core.model.Folder
-import dev.anilbeesetti.nextplayer.core.ui.base.DataState
-import dev.anilbeesetti.nextplayer.feature.videopicker.navigation.FolderArgs
+import com.shs.videoplayer.core.common.extensions.prettyName
+import com.shs.videoplayer.core.data.repository.PreferencesRepository
+import com.shs.videoplayer.core.database.dao.FavoriteDao
+import com.shs.videoplayer.core.database.entities.FavoriteEntity
+import com.shs.videoplayer.core.domain.GetSortedMediaUseCase
+import com.shs.videoplayer.core.media.services.MediaService
+import com.shs.videoplayer.core.media.sync.MediaInfoSynchronizer
+import com.shs.videoplayer.core.media.sync.MediaSynchronizer
+import com.shs.videoplayer.core.model.ApplicationPreferences
+import com.shs.videoplayer.core.model.Folder
+import com.shs.videoplayer.core.ui.base.DataState
+import com.shs.videoplayer.feature.videopicker.navigation.FolderArgs
 import java.io.File
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow

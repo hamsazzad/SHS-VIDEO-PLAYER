@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.ui
+package com.shs.videoplayer.feature.player.ui
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
@@ -7,9 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.media3.common.Player
-import dev.anilbeesetti.nextplayer.core.model.VideoContentScale
-import dev.anilbeesetti.nextplayer.core.ui.R as coreUiR
-import dev.anilbeesetti.nextplayer.feature.player.extensions.noRippleClickable
+import com.shs.videoplayer.core.model.VideoContentScale
+import com.shs.videoplayer.core.ui.R as coreUiR
+import com.shs.videoplayer.feature.player.extensions.noRippleClickable
 
 @Composable
 fun BoxScope.OverlayShowView(

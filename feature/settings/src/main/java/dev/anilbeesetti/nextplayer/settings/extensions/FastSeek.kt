@@ -1,9 +1,9 @@
-package dev.anilbeesetti.nextplayer.settings.extensions
+package com.shs.videoplayer.settings.extensions
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import dev.anilbeesetti.nextplayer.core.model.FastSeek
-import dev.anilbeesetti.nextplayer.core.ui.R
+import com.shs.videoplayer.core.model.FastSeek
+import com.shs.videoplayer.core.ui.R
 
 @Composable
 fun FastSeek.name(): String {

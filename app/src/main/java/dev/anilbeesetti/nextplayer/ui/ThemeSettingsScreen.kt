@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.ui
+package com.shs.videoplayer.ui
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -61,8 +61,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import dev.anilbeesetti.nextplayer.core.ui.designsystem.NextIcons
-import dev.anilbeesetti.nextplayer.ui.theme.ThemeManager
+import com.shs.videoplayer.core.ui.designsystem.NextIcons
+import com.shs.videoplayer.ui.theme.ThemeManager
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

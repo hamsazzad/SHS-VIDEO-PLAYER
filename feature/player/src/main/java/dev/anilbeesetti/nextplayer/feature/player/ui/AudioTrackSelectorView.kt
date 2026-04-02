@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.ui
+package com.shs.videoplayer.feature.player.ui
 
 import androidx.annotation.OptIn
 import androidx.compose.foundation.layout.BoxScope
@@ -10,9 +10,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.media3.common.C
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
-import dev.anilbeesetti.nextplayer.core.ui.R
-import dev.anilbeesetti.nextplayer.feature.player.extensions.getName
-import dev.anilbeesetti.nextplayer.feature.player.state.rememberTracksState
+import com.shs.videoplayer.core.ui.R
+import com.shs.videoplayer.feature.player.extensions.getName
+import com.shs.videoplayer.feature.player.state.rememberTracksState
 
 @OptIn(UnstableApi::class)
 @Composable

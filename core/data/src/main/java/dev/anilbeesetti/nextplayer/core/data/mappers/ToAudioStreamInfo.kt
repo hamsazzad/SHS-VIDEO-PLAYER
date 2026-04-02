@@ -1,7 +1,7 @@
-package dev.anilbeesetti.nextplayer.core.data.mappers
+package com.shs.videoplayer.core.data.mappers
 
-import dev.anilbeesetti.nextplayer.core.database.entities.AudioStreamInfoEntity
-import dev.anilbeesetti.nextplayer.core.model.AudioStreamInfo
+import com.shs.videoplayer.core.database.entities.AudioStreamInfoEntity
+import com.shs.videoplayer.core.model.AudioStreamInfo
 
 fun AudioStreamInfoEntity.toAudioStreamInfo() = AudioStreamInfo(
     index = index,

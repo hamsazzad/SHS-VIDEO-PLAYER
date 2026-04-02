@@ -1,9 +1,9 @@
-package dev.anilbeesetti.nextplayer.settings.extensions
+package com.shs.videoplayer.settings.extensions
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import dev.anilbeesetti.nextplayer.core.model.Font
-import dev.anilbeesetti.nextplayer.core.ui.R
+import com.shs.videoplayer.core.model.Font
+import com.shs.videoplayer.core.ui.R
 
 @Composable
 fun Font.name(): String {

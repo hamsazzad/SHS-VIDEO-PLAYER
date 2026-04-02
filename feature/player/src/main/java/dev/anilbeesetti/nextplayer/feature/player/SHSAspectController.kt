@@ -1,6 +1,6 @@
-package dev.anilbeesetti.nextplayer.feature.player
+package com.shs.videoplayer.feature.player
 
-import dev.anilbeesetti.nextplayer.core.model.VideoContentScale
+import com.shs.videoplayer.core.model.VideoContentScale
 import org.videolan.libvlc.MediaPlayer as SHSMediaPlayer
 
 /**

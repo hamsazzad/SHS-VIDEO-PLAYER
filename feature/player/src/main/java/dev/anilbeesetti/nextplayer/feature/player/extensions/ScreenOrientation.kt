@@ -1,7 +1,7 @@
-package dev.anilbeesetti.nextplayer.feature.player.extensions
+package com.shs.videoplayer.feature.player.extensions
 
 import android.content.pm.ActivityInfo
-import dev.anilbeesetti.nextplayer.core.model.ScreenOrientation
+import com.shs.videoplayer.core.model.ScreenOrientation
 
 fun ScreenOrientation.toActivityOrientation(videoOrientation: Int? = null): Int {
     return when (this) {

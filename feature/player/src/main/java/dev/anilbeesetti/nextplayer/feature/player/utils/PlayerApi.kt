@@ -1,11 +1,11 @@
-package dev.anilbeesetti.nextplayer.feature.player.utils
+package com.shs.videoplayer.feature.player.utils
 
 import android.content.Intent
 import android.net.Uri
 import androidx.media3.common.C
-import dev.anilbeesetti.nextplayer.feature.player.PlayerActivity
-import dev.anilbeesetti.nextplayer.feature.player.extensions.getParcelableUriArray
-import dev.anilbeesetti.nextplayer.feature.player.model.Subtitle
+import com.shs.videoplayer.feature.player.PlayerActivity
+import com.shs.videoplayer.feature.player.extensions.getParcelableUriArray
+import com.shs.videoplayer.feature.player.model.Subtitle
 
 class PlayerApi(val activity: PlayerActivity) {
 

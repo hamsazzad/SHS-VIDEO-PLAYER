@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.settings.screens.about
+package com.shs.videoplayer.settings.screens.about
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,11 +29,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.util.withContext
-import dev.anilbeesetti.nextplayer.core.ui.R
-import dev.anilbeesetti.nextplayer.core.ui.components.NextSegmentedListItem
-import dev.anilbeesetti.nextplayer.core.ui.components.NextTopAppBar
-import dev.anilbeesetti.nextplayer.core.ui.designsystem.NextIcons
-import dev.anilbeesetti.nextplayer.core.ui.extensions.plus
+import com.shs.videoplayer.core.ui.R
+import com.shs.videoplayer.core.ui.components.NextSegmentedListItem
+import com.shs.videoplayer.core.ui.components.NextTopAppBar
+import com.shs.videoplayer.core.ui.designsystem.NextIcons
+import com.shs.videoplayer.core.ui.extensions.plus
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable

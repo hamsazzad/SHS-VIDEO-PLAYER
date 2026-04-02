@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.core.common
+package com.shs.videoplayer.core.common
 
 import javax.inject.Qualifier
 

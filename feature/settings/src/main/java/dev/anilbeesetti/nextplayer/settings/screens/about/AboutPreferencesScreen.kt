@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.settings.screens.about
+package com.shs.videoplayer.settings.screens.about
 
 import android.content.Context
 import android.os.Build
@@ -55,11 +55,11 @@ import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.anilbeesetti.nextplayer.core.common.extensions.appIcon
-import dev.anilbeesetti.nextplayer.core.ui.R
-import dev.anilbeesetti.nextplayer.core.ui.components.ClickablePreferenceItem
-import dev.anilbeesetti.nextplayer.core.ui.components.NextTopAppBar
-import dev.anilbeesetti.nextplayer.core.ui.designsystem.NextIcons
+import com.shs.videoplayer.core.common.extensions.appIcon
+import com.shs.videoplayer.core.ui.R
+import com.shs.videoplayer.core.ui.components.ClickablePreferenceItem
+import com.shs.videoplayer.core.ui.components.NextTopAppBar
+import com.shs.videoplayer.core.ui.designsystem.NextIcons
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable

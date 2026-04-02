@@ -1,7 +1,7 @@
-package dev.anilbeesetti.nextplayer.core.data.repository
+package com.shs.videoplayer.core.data.repository
 
-import dev.anilbeesetti.nextplayer.core.model.ApplicationPreferences
-import dev.anilbeesetti.nextplayer.core.model.PlayerPreferences
+import com.shs.videoplayer.core.model.ApplicationPreferences
+import com.shs.videoplayer.core.model.PlayerPreferences
 import kotlinx.coroutines.flow.StateFlow
 
 interface PreferencesRepository {

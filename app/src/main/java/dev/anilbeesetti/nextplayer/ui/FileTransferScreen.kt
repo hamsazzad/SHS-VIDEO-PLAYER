@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.ui
+package com.shs.videoplayer.ui
 
 import android.Manifest
 import android.content.Context
@@ -38,7 +38,7 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.WriterException
 import com.google.zxing.qrcode.QRCodeWriter
-import dev.anilbeesetti.nextplayer.core.ui.designsystem.NextIcons
+import com.shs.videoplayer.core.ui.designsystem.NextIcons
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -413,7 +413,7 @@ fun SendView(context: Context) {
                 },
                 modifier = Modifier.weight(1f),
             ) {
-                Icon(painter = androidx.compose.ui.res.painterResource(dev.anilbeesetti.nextplayer.core.ui.R.drawable.ic_add), contentDescription = null, modifier = Modifier.size(18.dp))
+                Icon(painter = androidx.compose.ui.res.painterResource(com.shs.videoplayer.core.ui.R.drawable.ic_add), contentDescription = null, modifier = Modifier.size(18.dp))
                 Spacer(modifier = Modifier.width(4.dp))
                 Text("Add Files")
             }

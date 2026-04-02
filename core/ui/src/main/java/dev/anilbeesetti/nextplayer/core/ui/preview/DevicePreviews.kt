@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.core.ui.preview
+package com.shs.videoplayer.core.ui.preview
 
 import androidx.compose.ui.tooling.preview.Preview
 

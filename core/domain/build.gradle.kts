@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.anilbeesetti.nextplayer.core.domain"
+    namespace = "com.shs.videoplayer.core.domain"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

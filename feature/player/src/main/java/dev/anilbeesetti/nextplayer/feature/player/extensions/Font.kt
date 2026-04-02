@@ -1,7 +1,7 @@
-package dev.anilbeesetti.nextplayer.feature.player.extensions
+package com.shs.videoplayer.feature.player.extensions
 
 import android.graphics.Typeface
-import dev.anilbeesetti.nextplayer.core.model.Font
+import com.shs.videoplayer.core.model.Font
 
 fun Font.toTypeface(): Typeface = when (this) {
     Font.DEFAULT -> Typeface.DEFAULT

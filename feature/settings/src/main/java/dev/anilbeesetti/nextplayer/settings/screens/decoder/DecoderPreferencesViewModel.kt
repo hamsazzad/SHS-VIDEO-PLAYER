@@ -1,12 +1,12 @@
-package dev.anilbeesetti.nextplayer.settings.screens.decoder
+package com.shs.videoplayer.settings.screens.decoder
 
 import androidx.compose.runtime.Stable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.anilbeesetti.nextplayer.core.data.repository.PreferencesRepository
-import dev.anilbeesetti.nextplayer.core.model.DecoderPriority
-import dev.anilbeesetti.nextplayer.core.model.PlayerPreferences
+import com.shs.videoplayer.core.data.repository.PreferencesRepository
+import com.shs.videoplayer.core.model.DecoderPriority
+import com.shs.videoplayer.core.model.PlayerPreferences
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

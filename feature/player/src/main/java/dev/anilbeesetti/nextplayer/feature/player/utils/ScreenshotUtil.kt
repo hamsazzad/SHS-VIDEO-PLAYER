@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.utils
+package com.shs.videoplayer.feature.player.utils
 
 import android.content.ContentValues
 import android.content.Context
@@ -7,7 +7,7 @@ import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.widget.Toast
-import dev.anilbeesetti.nextplayer.core.ui.R
+import com.shs.videoplayer.core.ui.R
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat

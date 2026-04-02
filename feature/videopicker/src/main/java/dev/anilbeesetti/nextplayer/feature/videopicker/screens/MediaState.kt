@@ -1,6 +1,6 @@
-package dev.anilbeesetti.nextplayer.feature.videopicker.screens
+package com.shs.videoplayer.feature.videopicker.screens
 
-import dev.anilbeesetti.nextplayer.core.model.Folder
+import com.shs.videoplayer.core.model.Folder
 
 sealed interface MediaState {
     data object Loading : MediaState

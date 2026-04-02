@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player
+package com.shs.videoplayer.feature.player
 
 import android.net.Uri
 import org.videolan.libvlc.LibVLC

@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.core.datastore.datasource
+package com.shs.videoplayer.core.datastore.datasource
 
 import kotlinx.coroutines.flow.Flow
 

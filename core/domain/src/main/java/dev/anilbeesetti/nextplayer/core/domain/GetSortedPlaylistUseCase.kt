@@ -1,14 +1,14 @@
-package dev.anilbeesetti.nextplayer.core.domain
+package com.shs.videoplayer.core.domain
 
 import android.content.Context
 import android.net.Uri
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.anilbeesetti.nextplayer.core.common.Dispatcher
-import dev.anilbeesetti.nextplayer.core.common.NextDispatchers
-import dev.anilbeesetti.nextplayer.core.common.extensions.getPath
-import dev.anilbeesetti.nextplayer.core.data.repository.PreferencesRepository
-import dev.anilbeesetti.nextplayer.core.model.MediaViewMode
-import dev.anilbeesetti.nextplayer.core.model.Video
+import com.shs.videoplayer.core.common.Dispatcher
+import com.shs.videoplayer.core.common.NextDispatchers
+import com.shs.videoplayer.core.common.extensions.getPath
+import com.shs.videoplayer.core.data.repository.PreferencesRepository
+import com.shs.videoplayer.core.model.MediaViewMode
+import com.shs.videoplayer.core.model.Video
 import java.io.File
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher

@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.videopicker.state
+package com.shs.videoplayer.feature.videopicker.state
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -8,8 +8,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import dev.anilbeesetti.nextplayer.core.model.Folder
-import dev.anilbeesetti.nextplayer.core.model.Video
+import com.shs.videoplayer.core.model.Folder
+import com.shs.videoplayer.core.model.Video
 import java.io.Serializable
 
 @Composable

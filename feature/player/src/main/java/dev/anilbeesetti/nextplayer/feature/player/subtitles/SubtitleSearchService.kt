@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.subtitles
+package com.shs.videoplayer.feature.player.subtitles
 
 import android.util.Log
 import kotlinx.coroutines.Dispatchers

@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.ui
+package com.shs.videoplayer.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
@@ -70,9 +70,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.anilbeesetti.nextplayer.core.ui.designsystem.NextIcons
-import dev.anilbeesetti.nextplayer.optimizer.CacheScanResult
-import dev.anilbeesetti.nextplayer.optimizer.SafeCacheScanner
+import com.shs.videoplayer.core.ui.designsystem.NextIcons
+import com.shs.videoplayer.optimizer.CacheScanResult
+import com.shs.videoplayer.optimizer.SafeCacheScanner
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

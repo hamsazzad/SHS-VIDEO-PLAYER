@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player
+package com.shs.videoplayer.feature.player
 
   import android.graphics.Rect
   import androidx.annotation.OptIn
@@ -15,17 +15,17 @@ package dev.anilbeesetti.nextplayer.feature.player
   import androidx.media3.ui.compose.SURFACE_TYPE_TEXTURE_VIEW
   import androidx.media3.ui.compose.modifiers.resizeWithContentScale
   import androidx.media3.ui.compose.state.rememberPresentationState
-  import dev.anilbeesetti.nextplayer.feature.player.extensions.toContentScale
-  import dev.anilbeesetti.nextplayer.feature.player.state.ControlsVisibilityState
-  import dev.anilbeesetti.nextplayer.feature.player.state.PictureInPictureState
-  import dev.anilbeesetti.nextplayer.feature.player.state.SeekGestureState
-  import dev.anilbeesetti.nextplayer.feature.player.state.TapGestureState
-  import dev.anilbeesetti.nextplayer.feature.player.state.VideoZoomAndContentScaleState
-  import dev.anilbeesetti.nextplayer.feature.player.state.VolumeAndBrightnessGestureState
-  import dev.anilbeesetti.nextplayer.feature.player.ui.PlayerGestures
-  import dev.anilbeesetti.nextplayer.feature.player.ui.ShutterView
-  import dev.anilbeesetti.nextplayer.feature.player.ui.SubtitleConfiguration
-  import dev.anilbeesetti.nextplayer.feature.player.ui.SubtitleView
+  import com.shs.videoplayer.feature.player.extensions.toContentScale
+  import com.shs.videoplayer.feature.player.state.ControlsVisibilityState
+  import com.shs.videoplayer.feature.player.state.PictureInPictureState
+  import com.shs.videoplayer.feature.player.state.SeekGestureState
+  import com.shs.videoplayer.feature.player.state.TapGestureState
+  import com.shs.videoplayer.feature.player.state.VideoZoomAndContentScaleState
+  import com.shs.videoplayer.feature.player.state.VolumeAndBrightnessGestureState
+  import com.shs.videoplayer.feature.player.ui.PlayerGestures
+  import com.shs.videoplayer.feature.player.ui.ShutterView
+  import com.shs.videoplayer.feature.player.ui.SubtitleConfiguration
+  import com.shs.videoplayer.feature.player.ui.SubtitleView
 
   @OptIn(UnstableApi::class)
   @Composable

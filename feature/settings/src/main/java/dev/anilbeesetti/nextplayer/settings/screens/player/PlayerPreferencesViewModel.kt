@@ -1,16 +1,16 @@
-package dev.anilbeesetti.nextplayer.settings.screens.player
+package com.shs.videoplayer.settings.screens.player
 
 import androidx.compose.runtime.Stable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.anilbeesetti.nextplayer.core.common.extensions.round
-import dev.anilbeesetti.nextplayer.core.data.repository.PreferencesRepository
-import dev.anilbeesetti.nextplayer.core.model.ControlButtonsPosition
-import dev.anilbeesetti.nextplayer.core.model.DoubleTapGesture
-import dev.anilbeesetti.nextplayer.core.model.PlayerPreferences
-import dev.anilbeesetti.nextplayer.core.model.Resume
-import dev.anilbeesetti.nextplayer.core.model.ScreenOrientation
+import com.shs.videoplayer.core.common.extensions.round
+import com.shs.videoplayer.core.data.repository.PreferencesRepository
+import com.shs.videoplayer.core.model.ControlButtonsPosition
+import com.shs.videoplayer.core.model.DoubleTapGesture
+import com.shs.videoplayer.core.model.PlayerPreferences
+import com.shs.videoplayer.core.model.Resume
+import com.shs.videoplayer.core.model.ScreenOrientation
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

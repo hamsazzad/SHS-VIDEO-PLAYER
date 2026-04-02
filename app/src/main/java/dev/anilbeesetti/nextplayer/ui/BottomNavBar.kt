@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.ui
+package com.shs.videoplayer.ui
 
   import androidx.compose.material3.Icon
   import androidx.compose.material3.NavigationBar
@@ -7,7 +7,7 @@ package dev.anilbeesetti.nextplayer.ui
   import androidx.compose.runtime.Composable
   import androidx.compose.ui.res.painterResource
   import androidx.compose.ui.res.stringResource
-  import dev.anilbeesetti.nextplayer.core.ui.R as coreUiR
+  import com.shs.videoplayer.core.ui.R as coreUiR
 
   enum class BottomNavTab(val iconRes: Int, val labelRes: Int) {
       VIDEOS(coreUiR.drawable.ic_video, coreUiR.string.video),

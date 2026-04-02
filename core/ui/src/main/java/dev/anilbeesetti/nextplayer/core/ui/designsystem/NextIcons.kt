@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.core.ui.designsystem
+package com.shs.videoplayer.core.ui.designsystem
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack

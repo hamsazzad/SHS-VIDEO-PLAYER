@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.state
+package com.shs.videoplayer.feature.player.state
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -11,7 +11,7 @@ import androidx.media3.common.Player
 import androidx.media3.common.Tracks
 import androidx.media3.common.listen
 import androidx.media3.common.util.UnstableApi
-import dev.anilbeesetti.nextplayer.feature.player.extensions.switchTrack
+import com.shs.videoplayer.feature.player.extensions.switchTrack
 
 @UnstableApi
 @Composable

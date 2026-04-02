@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.ui
+package com.shs.videoplayer.feature.player.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
@@ -44,8 +44,8 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import dev.anilbeesetti.nextplayer.feature.player.buttons.PlayerButtonId
-import dev.anilbeesetti.nextplayer.feature.player.buttons.PlayerButtonLayout
+import com.shs.videoplayer.feature.player.buttons.PlayerButtonId
+import com.shs.videoplayer.feature.player.buttons.PlayerButtonLayout
 import kotlinx.coroutines.launch
 
 // ─── Edit Button Order — bottom sheet ────────────────────────────────────────

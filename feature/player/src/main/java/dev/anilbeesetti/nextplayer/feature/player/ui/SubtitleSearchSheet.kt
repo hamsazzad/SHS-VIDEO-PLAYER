@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.ui
+package com.shs.videoplayer.feature.player.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -46,10 +46,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import dev.anilbeesetti.nextplayer.feature.player.subtitles.SubtitleDownloadResult
-import dev.anilbeesetti.nextplayer.feature.player.subtitles.SubtitleResult
-import dev.anilbeesetti.nextplayer.feature.player.subtitles.SubtitleSearchResult
-import dev.anilbeesetti.nextplayer.feature.player.subtitles.SubtitleSearchService
+import com.shs.videoplayer.feature.player.subtitles.SubtitleDownloadResult
+import com.shs.videoplayer.feature.player.subtitles.SubtitleResult
+import com.shs.videoplayer.feature.player.subtitles.SubtitleSearchResult
+import com.shs.videoplayer.feature.player.subtitles.SubtitleSearchService
 import kotlinx.coroutines.launch
 import java.io.File
 

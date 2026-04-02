@@ -1,7 +1,7 @@
-package dev.anilbeesetti.nextplayer.core.ui.preview
+package com.shs.videoplayer.core.ui.preview
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import dev.anilbeesetti.nextplayer.core.model.Video
+import com.shs.videoplayer.core.model.Video
 
 class VideoPickerPreviewParameterProvider : PreviewParameterProvider<List<Video>> {
     override val values: Sequence<List<Video>>

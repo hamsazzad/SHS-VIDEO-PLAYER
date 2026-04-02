@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.state
+package com.shs.videoplayer.feature.player.state
 
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
@@ -18,8 +18,8 @@ import androidx.core.util.Consumer
 import androidx.media3.common.Player
 import androidx.media3.common.listen
 import androidx.media3.common.util.UnstableApi
-import dev.anilbeesetti.nextplayer.core.model.ScreenOrientation
-import dev.anilbeesetti.nextplayer.feature.player.extensions.isPortrait
+import com.shs.videoplayer.core.model.ScreenOrientation
+import com.shs.videoplayer.feature.player.extensions.isPortrait
 
 @UnstableApi
 @Composable

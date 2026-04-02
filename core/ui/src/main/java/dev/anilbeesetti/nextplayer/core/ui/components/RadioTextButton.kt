@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.core.ui.components
+package com.shs.videoplayer.core.ui.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

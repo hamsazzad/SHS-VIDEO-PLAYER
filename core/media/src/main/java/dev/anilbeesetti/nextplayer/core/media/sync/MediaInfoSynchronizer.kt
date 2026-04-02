@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.core.media.sync
+package com.shs.videoplayer.core.media.sync
 
 import android.net.Uri
 

@@ -1,4 +1,4 @@
-package dev.anilbeesetti.nextplayer.feature.player.ui
+package com.shs.videoplayer.feature.player.ui
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
@@ -33,10 +33,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import dev.anilbeesetti.nextplayer.core.model.DoubleTapGesture
-import dev.anilbeesetti.nextplayer.core.ui.R
-import dev.anilbeesetti.nextplayer.core.ui.theme.NextPlayerTheme
-import dev.anilbeesetti.nextplayer.feature.player.state.TapGestureState
+import com.shs.videoplayer.core.model.DoubleTapGesture
+import com.shs.videoplayer.core.ui.R
+import com.shs.videoplayer.core.ui.theme.NextPlayerTheme
+import com.shs.videoplayer.feature.player.state.TapGestureState
 import kotlin.time.Duration.Companion.milliseconds
 
 @Composable

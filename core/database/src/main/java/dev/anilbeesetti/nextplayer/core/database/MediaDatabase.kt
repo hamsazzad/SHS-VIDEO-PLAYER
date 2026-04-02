@@ -1,22 +1,22 @@
-package dev.anilbeesetti.nextplayer.core.database
+package com.shs.videoplayer.core.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import dev.anilbeesetti.nextplayer.core.database.dao.BookmarkDao
-import dev.anilbeesetti.nextplayer.core.database.dao.DirectoryDao
-import dev.anilbeesetti.nextplayer.core.database.dao.FavoriteDao
-import dev.anilbeesetti.nextplayer.core.database.dao.MediumDao
-import dev.anilbeesetti.nextplayer.core.database.dao.MediumStateDao
-import dev.anilbeesetti.nextplayer.core.database.entities.AudioStreamInfoEntity
-import dev.anilbeesetti.nextplayer.core.database.entities.BookmarkEntity
-import dev.anilbeesetti.nextplayer.core.database.entities.DirectoryEntity
-import dev.anilbeesetti.nextplayer.core.database.entities.FavoriteEntity
-import dev.anilbeesetti.nextplayer.core.database.entities.MediumEntity
-import dev.anilbeesetti.nextplayer.core.database.entities.MediumStateEntity
-import dev.anilbeesetti.nextplayer.core.database.entities.SubtitleStreamInfoEntity
-import dev.anilbeesetti.nextplayer.core.database.entities.VideoStreamInfoEntity
+import com.shs.videoplayer.core.database.dao.BookmarkDao
+import com.shs.videoplayer.core.database.dao.DirectoryDao
+import com.shs.videoplayer.core.database.dao.FavoriteDao
+import com.shs.videoplayer.core.database.dao.MediumDao
+import com.shs.videoplayer.core.database.dao.MediumStateDao
+import com.shs.videoplayer.core.database.entities.AudioStreamInfoEntity
+import com.shs.videoplayer.core.database.entities.BookmarkEntity
+import com.shs.videoplayer.core.database.entities.DirectoryEntity
+import com.shs.videoplayer.core.database.entities.FavoriteEntity
+import com.shs.videoplayer.core.database.entities.MediumEntity
+import com.shs.videoplayer.core.database.entities.MediumStateEntity
+import com.shs.videoplayer.core.database.entities.SubtitleStreamInfoEntity
+import com.shs.videoplayer.core.database.entities.VideoStreamInfoEntity
 
 @Database(
     entities = [
