@@ -16,6 +16,7 @@ sealed class MeDestination {
     object FileTransfer : MeDestination()
     object AboutUs : MeDestination()
     object Settings : MeDestination()
+    object ThemeSettings : MeDestination()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,6 +54,14 @@ fun MeScreen(
                     title = "About Us",
                     subtitle = "Developer info, social links and donations",
                     onClick = { onNavigate(MeDestination.AboutUs) },
+                )
+            }
+            item {
+                MeMenuCard(
+                    icon = NextIcons.Appearance,
+                    title = "Theme Settings",
+                    subtitle = "Custom accent color and background image",
+                    onClick = { onNavigate(MeDestination.ThemeSettings) },
                 )
             }
             item {

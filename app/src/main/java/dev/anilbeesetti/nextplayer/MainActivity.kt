@@ -52,6 +52,14 @@ import dev.anilbeesetti.nextplayer.ui.MeScreen
 import dev.anilbeesetti.nextplayer.ui.MusicScreen
 import dev.anilbeesetti.nextplayer.ui.PrivacyFolderScreen
 import dev.anilbeesetti.nextplayer.ui.TelegramScreen
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.layout.ContentScale
+import coil.compose.AsyncImage
+import dev.anilbeesetti.nextplayer.ui.ThemeSettingsScreen
+import dev.anilbeesetti.nextplayer.ui.theme.ThemeManager
+import androidx.compose.ui.graphics.Color as ComposeColor
+import androidx.compose.foundation.background
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 
@@ -125,8 +133,24 @@ class MainActivity : ComponentActivity() {
 
                 var currentTab by remember { mutableStateOf(BottomNavTab.VIDEOS) }
                 var meSubScreen by remember { mutableStateOf<MeSubScreen>(MeSubScreen.Main) }
+                val bgUri = remember(Unit) { ThemeManager.getBackgroundImageUri(this@MainActivity) }
+                val bgDim = remember(Unit) { ThemeManager.getBgDimAlpha(this@MainActivity) }
 
-                Scaffold(
+                Box(modifier = Modifier.fillMaxSize()) {
+                    if (bgUri != null) {
+                        AsyncImage(
+                            model = bgUri,
+                            contentDescription = "App background",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(ComposeColor.Black.copy(alpha = bgDim)),
+                        )
+                    }
+                    Scaffold(
                     bottomBar = {
                         BottomNavBar(
                             currentTab = currentTab,
@@ -210,6 +234,7 @@ class MainActivity : ComponentActivity() {
                                             MeDestination.FileTransfer -> MeSubScreen.FileTransfer
                                             MeDestination.AboutUs -> MeSubScreen.AboutUs
                                             MeDestination.Settings -> MeSubScreen.Settings
+                                            MeDestination.ThemeSettings -> MeSubScreen.ThemeSettings
                                         }
                                     },
                                 )
@@ -224,6 +249,13 @@ class MainActivity : ComponentActivity() {
                                 MeSubScreen.AboutUs -> TelegramScreen(
                                     modifier = Modifier.padding(paddingValues),
                                 )
+                                MeSubScreen.ThemeSettings -> {
+                                    BackHandler { meSubScreen = MeSubScreen.Main }
+                                    ThemeSettingsScreen(
+                                        modifier = Modifier.padding(paddingValues),
+                                        onBack = { meSubScreen = MeSubScreen.Main },
+                                    )
+                                }
                                 MeSubScreen.Settings -> {
                                     BackHandler { meSubScreen = MeSubScreen.Main }
                                     val settingsNavController = rememberNavController()
@@ -242,6 +274,7 @@ class MainActivity : ComponentActivity() {
                             TelegramScreen(modifier = Modifier.padding(paddingValues))
                         }
                     }
+                }
                 }
             }
         }
@@ -283,4 +316,5 @@ sealed class MeSubScreen {
     object FileTransfer : MeSubScreen()
     object AboutUs : MeSubScreen()
     object Settings : MeSubScreen()
+    object ThemeSettings : MeSubScreen()
 }

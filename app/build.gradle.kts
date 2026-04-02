@@ -143,6 +143,9 @@ dependencies {
     // LibVLC Engine
     implementation("org.videolan.android:libvlc-all:3.5.1")
 
+    // Image loading (background image, theme preview)
+    implementation(libs.coil.kt.compose)
+
     testImplementation(libs.junit4)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.test.ext)

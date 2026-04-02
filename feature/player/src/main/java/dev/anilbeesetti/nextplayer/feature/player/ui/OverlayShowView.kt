@@ -221,4 +221,9 @@ enum class OverlayView {
     EQUALIZER,
     BOOKMARKS,
     PLAYLIST_PANEL,
+    // Phase 1 + 2 additions
+    SUBTITLE_SEARCH,
+    SUBTITLE_EDITOR,
+    AUDIO_EDITOR,
+    EDIT_BUTTON_ORDER,
 }

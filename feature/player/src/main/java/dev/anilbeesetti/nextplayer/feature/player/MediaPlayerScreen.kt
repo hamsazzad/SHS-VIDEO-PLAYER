@@ -1,5 +1,9 @@
 package dev.anilbeesetti.nextplayer.feature.player
 
+import dev.anilbeesetti.nextplayer.feature.player.ui.AudioEditorSheet
+import dev.anilbeesetti.nextplayer.feature.player.ui.EditButtonOrderSheet
+import dev.anilbeesetti.nextplayer.feature.player.ui.SubtitleEditorSheet
+import dev.anilbeesetti.nextplayer.feature.player.ui.SubtitleSearchSheet
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.annotation.OptIn
@@ -229,6 +233,14 @@ fun MediaPlayerScreen(
     }
 
     var overlayView by remember { mutableStateOf<OverlayView?>(null) }
+    // Phase 1+2: layout version increments after EditButtonOrderSheet saves
+    var layoutVersion by remember { mutableStateOf(0) }
+    // Phase 2 sheet flags (driven directly rather than through overlayView to avoid
+    // the OverlayShowView's backdrop intercepting taps on the sheets)
+    var showSubtitleSearch  by remember { mutableStateOf(false) }
+    var showSubtitleEditor  by remember { mutableStateOf(false) }
+    var showAudioEditor     by remember { mutableStateOf(false) }
+    var showEditButtonOrder by remember { mutableStateOf(false) }
 
     CompositionLocalProvider(
         LocalControlsVisibilityState provides controlsVisibilityState,
@@ -337,6 +349,23 @@ fun MediaPlayerScreen(
                                     onPlaylistClick = {
                                         controlsVisibilityState.hideControls()
                                         overlayView = OverlayView.PLAYLIST_PANEL
+                                    },
+                                    layoutVersion = layoutVersion,
+                                    onSubtitleSearchClick = {
+                                        controlsVisibilityState.hideControls()
+                                        showSubtitleSearch = true
+                                    },
+                                    onSubtitleEditorClick = {
+                                        controlsVisibilityState.hideControls()
+                                        showSubtitleEditor = true
+                                    },
+                                    onAudioEditorClick = {
+                                        controlsVisibilityState.hideControls()
+                                        showAudioEditor = true
+                                    },
+                                    onEditButtonOrderClick = {
+                                        controlsVisibilityState.hideControls()
+                                        showEditButtonOrder = true
                                     },
                                 )
                             }
@@ -535,8 +564,64 @@ fun MediaPlayerScreen(
         )
     }
 
+    // ── New Phase 1+2 sheets ────────────────────────────────────────────────
+
+    val vlcSubtitleControllerRef = (context as? dev.anilbeesetti.nextplayer.feature.player.PlayerActivity)
+        ?.let { if (it::vlcSubtitleController.isInitialized) it.vlcSubtitleController else null }
+    val vlcAudioControllerRef = (context as? dev.anilbeesetti.nextplayer.feature.player.PlayerActivity)
+        ?.let { if (it::vlcAudioController.isInitialized) it.vlcAudioController else null }
+
+    if (showSubtitleSearch) {
+        SubtitleSearchSheet(
+            initialQuery = player.mediaMetadata.title?.toString()
+                ?: player.currentMediaItem?.localConfiguration?.uri?.lastPathSegment
+                    ?.substringBeforeLast('.') ?: "",
+            cacheDir = context.externalCacheDir ?: context.cacheDir,
+            onSubtitleDownloaded = { file ->
+                runCatching {
+                    val player3 = (context as? dev.anilbeesetti.nextplayer.feature.player.PlayerActivity)
+                        ?.controllerFuture?.value
+                    player3?.addMediaItem(
+                        androidx.media3.common.MediaItem.fromUri(
+                            android.net.Uri.fromFile(file)
+                        )
+                    )
+                }
+            },
+            onDismiss = { showSubtitleSearch = false },
+        )
+    }
+
+    if (showSubtitleEditor && vlcSubtitleControllerRef != null) {
+        SubtitleEditorSheet(
+            subtitleController = vlcSubtitleControllerRef,
+            onDismiss = { showSubtitleEditor = false },
+        )
+    }
+
+    if (showAudioEditor && vlcAudioControllerRef != null) {
+        AudioEditorSheet(
+            player = player,
+            vlcAudioController = vlcAudioControllerRef,
+            audioEqualizerState = audioEqualizerState,
+            onDismiss = { showAudioEditor = false },
+        )
+    }
+
+    if (showEditButtonOrder) {
+        EditButtonOrderSheet(
+            onDismiss = { showEditButtonOrder = false },
+            onLayoutSaved = { layoutVersion++ },
+        )
+    }
+
     BackHandler {
-        if (overlayView != null) {
+        if (showSubtitleSearch || showSubtitleEditor || showAudioEditor || showEditButtonOrder) {
+            showSubtitleSearch  = false
+            showSubtitleEditor  = false
+            showAudioEditor     = false
+            showEditButtonOrder = false
+        } else if (overlayView != null) {
             overlayView = null
         } else {
             onBackClick()
