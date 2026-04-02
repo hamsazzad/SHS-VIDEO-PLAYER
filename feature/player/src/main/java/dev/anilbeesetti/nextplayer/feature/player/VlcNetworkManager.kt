@@ -12,7 +12,7 @@ import org.videolan.libvlc.MediaPlayer as VlcMediaPlayer
  *  ─────────────────────────────────────────────────────────────────────
  *  Protocol      Scheme(s)            Use case
  *  ─────────────────────────────────────────────────────────────────────
- *  HLS (M3U8)   http(s)://*.m3u8     Adaptive live & VOD streams
+ *  HLS (M3U8)   http(s)://GLOB.m3u8  Adaptive live & VOD streams
  *  RTSP          rtsp://              IP cameras, live broadcasts
  *  RTMP          rtmp(s)://           Live streaming platforms
  *  SMB / CIFS    smb://               Windows shares on local WiFi
