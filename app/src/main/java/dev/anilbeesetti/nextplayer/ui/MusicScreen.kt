@@ -367,7 +367,7 @@ fun playAudio(context: Context, item: MusicItem, queue: List<MusicItem> = emptyL
 
 // ─── Main MusicScreen ─────────────────────────────────────────────────────────
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class, ExperimentalPermissionsApi::class)
 @Composable
 fun MusicScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
@@ -395,7 +395,6 @@ fun MusicScreen(modifier: Modifier = Modifier) {
     // Previously scanMusicFiles was called unconditionally — on devices where the runtime
     // permission had not been granted yet the ContentResolver query returned 0 rows and
     // the music list appeared empty with no explanation.
-    @OptIn(ExperimentalPermissionsApi::class)
     val storagePermission = rememberPermissionState(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             Manifest.permission.READ_MEDIA_AUDIO

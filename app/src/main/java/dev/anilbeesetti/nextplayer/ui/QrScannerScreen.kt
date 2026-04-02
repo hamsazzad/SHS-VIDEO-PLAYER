@@ -10,11 +10,13 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -94,7 +96,7 @@ fun QrScannerDialog(
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Icon(
-                            NextIcons.Camera,
+                            NextIcons.QrCodeScanner,
                             contentDescription = null,
                             tint = Color.White,
                             modifier = Modifier
