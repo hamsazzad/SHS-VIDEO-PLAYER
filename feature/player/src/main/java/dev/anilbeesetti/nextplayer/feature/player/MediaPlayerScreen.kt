@@ -567,10 +567,9 @@ fun MediaPlayerScreen(
     // ── New Phase 1+2 sheets ────────────────────────────────────────────────
 
     val context = androidx.compose.ui.platform.LocalContext.current
-    val vlcSubtitleControllerRef = (context as? dev.anilbeesetti.nextplayer.feature.player.PlayerActivity)
-        ?.let { if (it::vlcSubtitleController.isInitialized) it.vlcSubtitleController else null }
-    val vlcAudioControllerRef = (context as? dev.anilbeesetti.nextplayer.feature.player.PlayerActivity)
-        ?.let { if (it::vlcAudioController.isInitialized) it.vlcAudioController else null }
+    val activity = context as? dev.anilbeesetti.nextplayer.feature.player.PlayerActivity
+    val vlcSubtitleControllerRef = runCatching { activity?.vlcSubtitleController }.getOrNull()
+    val vlcAudioControllerRef    = runCatching { activity?.vlcAudioController }.getOrNull()
 
     if (showSubtitleSearch) {
         SubtitleSearchSheet(
