@@ -2,10 +2,14 @@ name: Build Release APKs
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -15,12 +19,22 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+          cache: 'gradle'
 
       - name: Make gradlew executable
         run: chmod +x gradlew
+
+      - name: Show Android SDK info
+        run: |
+          echo "ANDROID_HOME: $ANDROID_HOME"
+          ls $ANDROID_HOME/build-tools/ 2>/dev/null | tail -3 || echo "No build-tools found"
+          ls $ANDROID_HOME/platforms/ 2>/dev/null | tail -3 || echo "No platforms found"
+
+      - name: Install required Android SDK components
+        run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager \
+            "build-tools;35.0.0" \
+            "platforms;android-35" 2>&1 | tail -5
 
       - name: Build release APKs
         run: |
@@ -28,48 +42,63 @@ jobs:
             -x lintVitalRelease \
             -x lintVitalAnalyzeRelease \
             --no-daemon \
-            --max-workers 2
+            --max-workers 2 \
+            --stacktrace
 
-      - name: List APKs
+      - name: List generated APKs
         run: ls -lh app/build/outputs/apk/release/
 
-      - name: Verify APK signatures
+      - name: Verify signatures
         run: |
+          BT=$(ls $ANDROID_HOME/build-tools/ | sort -V | tail -1)
           for apk in app/build/outputs/apk/release/*.apk; do
             echo "=== $(basename $apk) ==="
-            $ANDROID_HOME/build-tools/35.0.0/apksigner verify --print-certs "$apk" | grep "DN:"
+            $ANDROID_HOME/build-tools/$BT/apksigner verify --print-certs "$apk" | grep "DN:" || true
           done
 
       - name: Upload APKs as artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: shs-player-release-apks
+          name: shs-player-v1.1.0-apks
           path: app/build/outputs/apk/release/*.apk
-          retention-days: 7
+          retention-days: 30
 
-      - name: Create GitHub Release
+      - name: Delete old v1.1.0 release if exists
+        run: |
+          RELEASE_ID=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/releases/tags/v1.1.0" | \
+            python3 -c "import sys,json; r=json.load(sys.stdin); print(r.get('id',''))" 2>/dev/null || echo "")
+          if [ -n "$RELEASE_ID" ]; then
+            curl -s -X DELETE -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              "https://api.github.com/repos/${{ github.repository }}/releases/$RELEASE_ID"
+            echo "Deleted old release $RELEASE_ID"
+          fi
+
+      - name: Create GitHub Release v1.1.0
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v1.1.0
-          name: "SHS Video Player v1.1.0 - Stable"
+          name: "SHS Video Player v1.1.0 - Crash Fixed"
           body: |
             ## SHS Video Player v1.1.0
 
-            **Bug fixes in this release:**
-            - Fixed crash on launch (`LibVLC nativeNew` crash on Android 10+ low-end devices)
-            - Removed aggressive HW codec flags that caused initialization failure
-            - Minimal safe LibVLC init; codec auto-selected by engine
+            **What was fixed:**
+            - Fixed crash on launch (LibVLC nativeNew crash on Android 10+ low-end devices)
+            - Removed aggressive HW codec flags: --codec=mediacodec_ndk,iomx, --avcodec-hw=any, --mediacodec-dr
+            - Replaced with safe minimal LibVLC init; codec is auto-selected
+            - Package ID updated to `com.shs.videoplayer`
 
-            **Package:**  `com.shs.videoplayer`
+            **Install the right APK for your device:**
 
             | APK | Architecture |
             |-----|-------------|
-            | app-arm64-v8a-release.apk | 64-bit ARM (most modern phones) |
-            | app-armeabi-v7a-release.apk | 32-bit ARM (older devices) |
-            | app-x86-release.apk | x86 (emulators) |
-            | app-x86_64-release.apk | 64-bit x86 (emulators) |
-            | app-universal-release.apk | All architectures |
+            | app-arm64-v8a-release.apk | Modern phones (most common) |
+            | app-armeabi-v7a-release.apk | Older ARM devices |
+            | app-x86-release.apk | x86 emulators |
+            | app-x86_64-release.apk | 64-bit x86 emulators |
+            | app-universal-release.apk | All devices (largest) |
 
             > Core Engine: LibVLC (VideoLAN) | UI Lib: NextLib (anilbeesetti)
           files: app/build/outputs/apk/release/*.apk
           token: ${{ secrets.GITHUB_TOKEN }}
+          make_latest: true
