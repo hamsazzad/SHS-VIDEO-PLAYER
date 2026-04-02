@@ -124,6 +124,20 @@ class PlayerActivity : ComponentActivity() {
     // Dedicated SurfaceView for VLC video frame rendering
     private lateinit var vlcSurfaceView: SurfaceView
 
+    // ── VLC controller suite ──────────────────────────────────────────────────
+
+    /** Subtitle delay / font-size / color / shadow control. */
+    lateinit var vlcSubtitleController: VlcSubtitleController
+        private set
+
+    /** Audio delay / 10-band EQ / passthrough / spatializer control. */
+    lateinit var vlcAudioController: VlcAudioController
+        private set
+
+    /** Network stream loader — HLS / RTSP / RTMP / SMB / FTP / DLNA. */
+    lateinit var vlcNetworkManager: VlcNetworkManager
+        private set
+
 
     /**
      * Mirrors Media3 play/pause/seek events to the LibVLC engine.
@@ -169,6 +183,11 @@ class PlayerActivity : ComponentActivity() {
 
         // Initialize VLC MediaPlayer bound to the LibVLC instance
         vlcMediaPlayer = VlcMediaPlayer(libVLC)
+
+        // Boot controller suite — all three are stateless wrappers; lightweight init
+        vlcSubtitleController = VlcSubtitleController(vlcMediaPlayer)
+        vlcAudioController    = VlcAudioController(vlcMediaPlayer)
+        vlcNetworkManager     = VlcNetworkManager()
 
         // Create a dedicated SurfaceView and wire VLC video output to it
         vlcSurfaceView = SurfaceView(this).also { sv ->
@@ -619,11 +638,49 @@ class PlayerActivity : ComponentActivity() {
      * Does NOT call play() — [vlcMirrorListener.onIsPlayingChanged] handles that
      * once Media3 transitions to the playing state.
      */
+    /**
+     * Creates a [Media] from a local or content [Uri] and assigns it to [vlcMediaPlayer].
+     * Subtitle styling (font / color / shadow) and audio flags (passthrough / spatializer)
+     * are injected as media options so they survive playlist transitions.
+     */
     private fun loadVlcMedia(uri: Uri) {
         if (!::libVLC.isInitialized || !::vlcMediaPlayer.isInitialized) return
         val media = Media(libVLC, uri)
+
+        // Inject per-media subtitle styling (font size, color, shadow)
+        if (::vlcSubtitleController.isInitialized) vlcSubtitleController.applyToMedia(media)
+
+        // Inject per-media audio flags (passthrough, spatializer)
+        if (::vlcAudioController.isInitialized) vlcAudioController.applyToMedia(media)
+
         vlcMediaPlayer.media = media
         media.release() // ownership transferred to vlcMediaPlayer; safe to release wrapper
+    }
+
+    /**
+     * Load and play any network stream URL via LibVLC.
+     * Protocol is auto-detected; buffering options are applied per protocol.
+     *
+     * Supported: HTTP/HTTPS, HLS (m3u8), RTSP (ip cameras), RTMP (live),
+     *            SMB (Samba/Windows shares), FTP (local servers), DLNA/UPnP.
+     *
+     * Example:
+     *   loadNetworkStream("rtsp://192.168.1.50/stream")
+     *   loadNetworkStream("smb://NAS/Videos/movie.mkv")
+     *   loadNetworkStream("http://cdn.example.com/live/stream.m3u8")
+     */
+    fun loadNetworkStream(url: String) {
+        if (!::libVLC.isInitialized || !::vlcMediaPlayer.isInitialized) return
+
+        val media = vlcNetworkManager.createMedia(url, libVLC)
+
+        // Apply subtitle and audio settings to the network media as well
+        if (::vlcSubtitleController.isInitialized) vlcSubtitleController.applyToMedia(media)
+        if (::vlcAudioController.isInitialized) vlcAudioController.applyToMedia(media)
+
+        vlcMediaPlayer.media = media
+        media.release()
+        vlcMediaPlayer.play()
     }
 
     private fun startPlayback() {
