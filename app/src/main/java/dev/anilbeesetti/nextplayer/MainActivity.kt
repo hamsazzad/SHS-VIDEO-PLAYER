@@ -58,6 +58,7 @@ import androidx.compose.ui.layout.ContentScale
 import coil.compose.AsyncImage
 import dev.anilbeesetti.nextplayer.ui.ThemeSettingsScreen
 import dev.anilbeesetti.nextplayer.ui.OptimizerScreen
+import dev.anilbeesetti.nextplayer.ui.SecretVaultScreen
 import dev.anilbeesetti.nextplayer.ui.theme.ThemeManager
 import androidx.compose.ui.graphics.Color as ComposeColor
 import androidx.compose.foundation.background
@@ -231,6 +232,7 @@ class MainActivity : ComponentActivity() {
                                     modifier = Modifier.padding(paddingValues),
                                     onNavigate = { dest ->
                                         meSubScreen = when (dest) {
+                                            MeDestination.SecretVault -> MeSubScreen.SecretVault
                                             MeDestination.PrivacyFolder -> MeSubScreen.PrivacyFolder
                                             MeDestination.FileTransfer -> MeSubScreen.FileTransfer
                                             MeDestination.AboutUs -> MeSubScreen.AboutUs
@@ -239,6 +241,10 @@ class MainActivity : ComponentActivity() {
                                             MeDestination.Optimizer -> MeSubScreen.Optimizer
                                         }
                                     },
+                                )
+                                MeSubScreen.SecretVault -> SecretVaultScreen(
+                                    modifier = Modifier.padding(paddingValues),
+                                    onNavigateUp = { meSubScreen = MeSubScreen.Main },
                                 )
                                 MeSubScreen.PrivacyFolder -> PrivacyFolderScreen(
                                     modifier = Modifier.padding(paddingValues),
@@ -327,4 +333,5 @@ sealed class MeSubScreen {
     object Settings : MeSubScreen()
     object ThemeSettings : MeSubScreen()
     object Optimizer : MeSubScreen()
+    object SecretVault : MeSubScreen()
 }

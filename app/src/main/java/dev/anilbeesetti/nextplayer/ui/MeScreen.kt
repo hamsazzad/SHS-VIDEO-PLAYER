@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import dev.anilbeesetti.nextplayer.core.ui.designsystem.NextIcons
 
 sealed class MeDestination {
+    object SecretVault : MeDestination()
     object PrivacyFolder : MeDestination()
     object FileTransfer : MeDestination()
     object AboutUs : MeDestination()
@@ -39,6 +40,14 @@ fun MeScreen(
                     title = "App Optimizer",
                     subtitle = "Scan and clean app cache to free up storage",
                     onClick = { onNavigate(MeDestination.Optimizer) },
+                )
+            }
+            item {
+                MeMenuCard(
+                    icon = NextIcons.Lock,
+                    title = "Secret Vault",
+                    subtitle = "PIN + biometric protected hidden video storage",
+                    onClick = { onNavigate(MeDestination.SecretVault) },
                 )
             }
             item {
